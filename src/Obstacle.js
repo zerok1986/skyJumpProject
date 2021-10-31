@@ -1,5 +1,5 @@
 class Obstacle {
-  constructor(ctx, posX, posY, width, height, slope, speedX, speedY) {
+  constructor(ctx, posX, posY, width, height, slope, speedY) {
     this.ctx = ctx
 
     this.pos = {
@@ -14,7 +14,6 @@ class Obstacle {
     }
 
     this.speed = {
-      x: speedX,
       y: speedY
     }
 
@@ -31,7 +30,7 @@ class Obstacle {
   }
 
   move() {
-    this.pos.x -= this.speed.x
+    this.pos.x -= this.speed.y
   }
 
 }

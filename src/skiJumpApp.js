@@ -14,6 +14,9 @@ const game = {
   player: undefined,
   scoreBoard: undefined,
   obstacles: [],
+  obstaclesSpeed: 1,
+  isCollisionCount: 0,
+  isCollisionDodgedCount: 0,
   slope: {
     angle: 20,
     start: {x: 0, y: 20},
@@ -51,13 +54,16 @@ const game = {
     if (this.framesCounter > 2000) {
       this.framesCounter = 0
     }
-    if (this.framesCounter % 50 === 0) {
+    if (this.framesCounter % 150 === 0) {
       this.createObstacle()
     }
     this.clearScreen();
     this.drawAll()
     this.moveAll()
-    this.isCollision()
+    this.clearObstacles()
+    this.collisionResult(this.isCollision())
+    console.log(this.isCollisionCount)
+    console.log(this.isCollisionDodgedCount)
    
   }, 1000 / this.FPS)
    
@@ -121,7 +127,7 @@ const game = {
       this.slope.start.y,
       this.slope.end.y - 20
     );
-    this.obstacles.push(new Obstacle(this.ctx, this.slope.end.x, randomY, 15, 15, this.slope, 15))
+    this.obstacles.push(new Obstacle(this.ctx, this.slope.end.x, randomY, 15, 15, this.slope, this.obstaclesSpeed))
   },
 
   moveBackground() {
@@ -155,25 +161,39 @@ const game = {
     }
   },
 
+  clearObstacles() {
+    this.obstacles = this.obstacles.filter(obs => {
+      if (obs.pos.x > 0) {
+        return true
+      }
+    })
+  },
+
   isCollision() {
-    return this.obstacles.some((obs) => {
+      return this.obstacles.some((obs) => {
       let dx = (this.player.pos.x + this.player.pos.radius) - (obs.pos.x + obs.pos.radius);
       let dy = (this.player.pos.y + this.player.pos.radius) - (obs.pos.y + obs.pos.radius);
       let distance = Math.sqrt(dx * dx + dy * dy);
 
       if (distance < this.player.pos.radius + obs.pos.radius) {
-          console.log('colision!!!')
+          return true
       }
     })
+  },
+
+
+  collisionResult(result) {
+    result === true ? this.isCollisionCount++ : this.isCollisionDodgedCount++
   }
 
 
 
-}
 
-  /* TODO:  clearObstacles() 
+
+
+  /* TODO:  
             colisiones que tengan efecto en velocidad
             crear otro tipo de Obstacle (PowerUp)
               - otro tipo de efecto en velocidad
-            
-  */
+            score() */
+}
