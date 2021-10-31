@@ -49,6 +49,7 @@ const game = {
   window.setInterval(() => {
     this.clearScreen();
     this.drawAll()
+    this.moveBackground()
     
    
   }, 1000 / this.FPS)
@@ -90,7 +91,7 @@ const game = {
   },
 
   createPlayer() {
-    this.player = new Player(this.ctx, 100, 100, 20, 20, 5)
+    this.player = new Player(this.ctx, 100, 100, 20, 20, this.slope, 5)
     console.log("creando Player")
   },
 

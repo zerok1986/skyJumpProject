@@ -1,5 +1,5 @@
 class Player {
-  constructor(ctx, posX, posY, width, height, speedY) {
+  constructor(ctx, posX, posY, width, height, slope, speedY) {
     this.ctx = ctx
 
     this.pos = {
@@ -15,6 +15,12 @@ class Player {
     this.speed = {
       y: speedY
     }
+
+    this.slope = {
+      angle: slope.angle,
+      start: { x: slope.start.x, y: slope.start.y },
+      end: { x: slope.end.x, y: slope.end.y },
+    };
 
     //// TODO:
     // this.frames = 3
@@ -38,13 +44,17 @@ class Player {
     }
 
     moveUp(){
-      this.pos.y -= this.speed.y
-      console.log("moving up")
+      if (this.pos.y > this.slope.start.y){
+        this.pos.y -= this.speed.y
+        console.log("moving up")
+      }
     }
 
     moveDown(){
-      this.pos.y += this.speed.y
-      console.log("moving down");
+      if (this.pos.y < this.slope.end.y){
+        this.pos.y += this.speed.y
+        console.log("moving down");
+      }
     }
       
 }
