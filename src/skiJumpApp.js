@@ -11,6 +11,7 @@ const game = {
   FPS: 60,
   intervalId: undefined,
   background: undefined,
+  backgroundSpeed: 1,
   player: undefined,
   scoreBoard: undefined,
   obstacles: [],
@@ -62,8 +63,9 @@ const game = {
     this.moveAll()
     this.clearObstacles()
     this.collisionResult(this.isCollision())
-    console.log(this.isCollisionCount)
-    console.log(this.isCollisionDodgedCount)
+    this.updateSpeed()
+    console.log("dodge count:", this.isCollisionDodgedCount)
+    console.log('this obstacles speed:' ,this.obstaclesSpeed)
    
   }, 1000 / this.FPS)
    
@@ -109,7 +111,7 @@ const game = {
   },
 
   createBackground() {
-    this.background = new Background(this.ctx, 0, 0, this.canvasSize.width, this.canvasSize.height, 5, "bm-view.png")
+    this.background = new Background(this.ctx, 0, 0, this.canvasSize.width, this.canvasSize.height, this.backgroundSpeed, "bm-view.png")
     //console.log("creando Background")
   },
 
@@ -176,7 +178,7 @@ const game = {
       let distance = Math.sqrt(dx * dx + dy * dy);
 
       if (distance < this.player.pos.radius + obs.pos.radius) {
-          return true
+          this.obstaclesSpeed = 1
       }
     })
   },
@@ -184,11 +186,31 @@ const game = {
 
   collisionResult(result) {
     result === true ? this.isCollisionCount++ : this.isCollisionDodgedCount++
+  },
+
+  updateSpeed() {
+    console.log("en update speed")
+    console.log("speed:", this.obstaclesSpeed)
+    if (this.obstaclesSpeed > 0 && this.obstaclesSpeed < 5) {
+      if (this.isCollisionDodgedCount > 200){
+        console.log('ha entrado en el primer')
+        this.obstaclesSpeed += 1
+        this.isCollisionDodgedCount = 0
+      }
+    } 
+    else if (this.obstaclesSpeed >= 5 && this.obstaclesSpeed < 10) {
+      if (this.isCollisionDodgedCount > 100) {
+          this.obstaclesSpeed += 2
+          this.isCollisionDodgedCount = 0
+        }
+    }
+    else if (this.obstaclesSpeed >= 10 && this.obstaclesSpeed < 15) {
+      if (this.isCollisionDodgedCount > 70) {
+          this.obstaclesSpeed += 3
+          this.isCollisionDodgedCount = 0
+        }
+    }
   }
-
-
-
-
 
 
   /* TODO:  
