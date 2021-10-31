@@ -46,16 +46,25 @@ class Player {
 
     moveUp(){
       if (this.pos.y > this.slope.start.y){
-        this.pos.y -= this.speed.y
-        // console.log("moving up")
-      }
-    }
-
-    moveDown(){
-      if (this.pos.y < this.slope.end.y){
-        this.pos.y += this.speed.y
-        // console.log("moving down");
+        if (this.pos.y - this.speed.y > this.slope.start.y) {
+          this.pos.y -= this.speed.y
+        }
+        else{
+          this.pos.y = this.slope.start.y + this.size.height / 2
+        }
       }
     }
       
+
+    moveDown(){
+      if (this.pos.y < this.slope.end.y){
+        if (this.pos.y + this.speed.y < this.slope.end.y){
+          this.pos.y += this.speed.y
+        }
+      
+        else {
+        this.pos.y = this.slope.end.y - this.size.height / 2
+        }
+      } 
+    }
 }

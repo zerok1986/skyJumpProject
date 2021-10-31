@@ -265,6 +265,5 @@ const game = {
   /* TODO:  
             crear otro tipo de Obstacle (PowerUp)
               - otro tipo de efecto en velocidad
-            showSpeed()
-            score() */
+            */
 }
