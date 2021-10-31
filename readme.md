@@ -21,7 +21,6 @@
 
 
 
-
 ## SKI JUMP GAME STEPS ##
 
 # PASOS MVP
@@ -41,3 +40,9 @@
 3. Detectar colisiones
 4. Movimiento PowerUps
 5. Scoring, transiciones, etc
+
+# TODO'S PENDIENTES
+
+1. Retocar los limites del player para que no rebote y se quede fino
+2. Tocar el n de aparicion de obstaculos con velocidad baja
+3. PowerUp: definir otro tipo de efecto en velocidad
