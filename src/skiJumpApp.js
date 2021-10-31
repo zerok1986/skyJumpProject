@@ -16,6 +16,7 @@ const game = {
   scoreBoard: undefined,
   obstacles: [],
   obstaclesSpeed: 1,
+  powerUps: [],
   isCollisionCount: 0,
   isCollisionDodgedCount: 0,
   score: 0,
@@ -59,13 +60,17 @@ const game = {
     if (this.framesCounter % 150 === 0) {
       this.createObstacle()
     }
+    if (this.framesCounter % 300 === 0) {
+      this.createPowerUp()
+    }
     this.clearScreen();
     this.drawAll()
     this.moveAll()
     this.clearObstacles()
+    this.clearPowerUps()
     this.collisionResult(this.isCollision())
     this.updateSpeed()
-    console.log("dodge count:", this.isCollisionDodgedCount)
+    console.log("powerup:", this.powerUps)
     console.log('this obstacles speed:' ,this.obstaclesSpeed)
    
   }, 1000 / this.FPS)
@@ -82,6 +87,7 @@ const game = {
     this.drawSlope()
     this.drawPlayer()
     this.drawObstacles()
+    this.drawPowerUps()
     this.resetContext()
   },
 
@@ -107,9 +113,14 @@ const game = {
     this.obstacles.forEach(obs => obs.draw())
   },
 
+  drawPowerUps() {
+    this.powerUps.forEach(pwu => pwu.draw())
+  },
+
   moveAll(){
     this.moveBackground()
     this.moveObstacle()
+    this.movePowerUps()
   },
 
   createBackground() {
@@ -134,6 +145,14 @@ const game = {
     this.obstacles.push(new Obstacle(this.ctx, this.slope.end.x, randomY, 15, 15, this.slope, this.obstaclesSpeed))
   },
 
+  createPowerUp() {
+    const randomY = this.getRandomInt(
+      this.slope.start.y,
+      this.slope.end.y - 20
+    );
+    this.powerUps.push(new PowerUp(this.ctx, this.slope.end.x, randomY, 10, 10, this.slope, 10))
+  },
+
   moveBackground() {
     this.background.move()
     //console.log("moviendo Background")
@@ -142,6 +161,11 @@ const game = {
   moveObstacle() {
     this.obstacles.forEach(obs => obs.move())
   },
+
+  movePowerUps() {
+    this.powerUps.forEach(pwu => pwu.move())
+  },
+
 
   clearScreen() {
     this.ctx.clearRect(0, 0, this.canvasSize.width, this.canvasSize.height)
@@ -168,6 +192,14 @@ const game = {
   clearObstacles() {
     this.obstacles = this.obstacles.filter(obs => {
       if (obs.pos.x > 0) {
+        return true
+      }
+    })
+  },
+
+  clearPowerUps() {
+    this.powerUps = this.powerUps.filter(pwu => {
+      if (pwu.pos.x > 0) {
         return true
       }
     })
@@ -262,8 +294,8 @@ const game = {
   }
     
 
-  /* TODO:  
-            crear otro tipo de Obstacle (PowerUp)
-              - otro tipo de efecto en velocidad
+  /* TODO:  retocar los limites del player para que no rebote y se quede fino
+            tocar el n de aparicion de obstaculos con velocidad baja
+            PowerUp: definir otro tipo de efecto en velocidad
             */
 }
