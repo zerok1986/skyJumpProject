@@ -46,10 +46,17 @@ const game = {
   },
 
   start(){
-  window.setInterval(() => {
+  this.intervalId = setInterval(() => {
+    this.framesCounter++
+    if (this.framesCounter > 2000) {
+      this.framesCounter = 0
+    }
+    if (this.framesCounter % 100 === 0) {
+      this.createObstacle()
+    }
     this.clearScreen();
     this.drawAll()
-    this.moveBackground()
+    this.moveAll()
     
    
   }, 1000 / this.FPS)
@@ -64,6 +71,7 @@ const game = {
     this.drawBackground()
     this.drawSlope()
     this.drawPlayer()
+    this.drawObstacles()
     this.resetContext()
   },
 
@@ -85,6 +93,15 @@ const game = {
     
   },
 
+  drawObstacles() {
+    this.obstacles.forEach(obs => obs.draw())
+  },
+
+  moveAll(){
+    this.moveBackground()
+    this.moveObstacle()
+  },
+
   createBackground() {
     this.background = new Background(this.ctx, 0, 0, this.canvasSize.width, this.canvasSize.height, 5, "bm-view.png")
     console.log("creando Background")
@@ -95,9 +112,17 @@ const game = {
     console.log("creando Player")
   },
 
+  createObstacle() {
+    this.obstacles.push(new Obstacle(this.ctx, this.canvasSize.width, this.canvasSize.height - 80, 40, 80, this.slope, 5))
+  },
+
   moveBackground() {
     this.background.move()
     console.log("moviendo Background")
+  },
+
+  moveObstacle() {
+    this.obstacles.forEach(obs => obs.move())
   },
 
   clearScreen() {
