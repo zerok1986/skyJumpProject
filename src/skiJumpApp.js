@@ -51,7 +51,7 @@ const game = {
     if (this.framesCounter > 2000) {
       this.framesCounter = 0
     }
-    if (this.framesCounter % 100 === 0) {
+    if (this.framesCounter % 50 === 0) {
       this.createObstacle()
     }
     this.clearScreen();
@@ -111,9 +111,17 @@ const game = {
     this.player = new Player(this.ctx, 100, 100, 20, 20, this.slope, 5)
     console.log("creando Player")
   },
+  
+  getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+  },
 
   createObstacle() {
-    this.obstacles.push(new Obstacle(this.ctx, this.canvasSize.width, this.canvasSize.height - 80, 40, 80, this.slope, 5))
+    const randomY = this.getRandomInt(
+      this.slope.start.y,
+      this.slope.end.y - 20
+    );
+    this.obstacles.push(new Obstacle(this.ctx, this.slope.end.x, randomY, 15, 15, this.slope, 15))
   },
 
   moveBackground() {
