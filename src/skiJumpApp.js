@@ -18,6 +18,7 @@ const game = {
   obstaclesSpeed: 1,
   isCollisionCount: 0,
   isCollisionDodgedCount: 0,
+  score: 0,
   slope: {
     angle: 20,
     start: {x: 0, y: 20},
@@ -77,6 +78,7 @@ const game = {
 
   drawAll(){
     this.drawBackground()
+    this.drawScore()
     this.drawSlope()
     this.drawPlayer()
     this.drawObstacles()
@@ -188,9 +190,15 @@ const game = {
     result === true ? this.isCollisionCount++ : this.isCollisionDodgedCount++
   },
 
-  updateSpeed() {
+  updateSpeed(){
+    this.updateObstacleSpeed()
+    this.updateBackgroundSpeed()
+    this.updatePlayerSpeed()
+  },
+
+  updateObstacleSpeed() {
     console.log("en update speed")
-    console.log("speed:", this.obstaclesSpeed)
+    console.log("obstacle speed:", this.obstaclesSpeed)
     if (this.obstaclesSpeed > 0 && this.obstaclesSpeed < 5) {
       if (this.isCollisionDodgedCount > 200){
         console.log('ha entrado en el primer')
@@ -210,12 +218,53 @@ const game = {
           this.isCollisionDodgedCount = 0
         }
     }
-  }
+  },
 
+  updateBackgroundSpeed(){
+    console.log("en update background speed")
+    if (this.obstaclesSpeed > 0 && this.obstaclesSpeed < 3) {
+      this.background.speed.x = 2
+    }
+    else if (this.obstaclesSpeed >= 3 && this.obstaclesSpeed < 5) {
+      this.background.speed.x = 4;
+    }
+    else if (this.obstaclesSpeed >= 5 && this.obstaclesSpeed < 10) {
+      this.background.speed.x = 6;
+    }
+    else if (this.obstaclesSpeed >= 10 && this.obstaclesSpeed < 15) {
+      this.background.speed.x = 8;
+    }
+
+    console.log("background speed:", this.background.speed.x)
+  },
+
+  updatePlayerSpeed() {
+    if (this.obstaclesSpeed > 0 && this.obstaclesSpeed < 3) {
+      this.player.speed.y = 5
+    }
+    else if (this.obstaclesSpeed >= 3 && this.obstaclesSpeed < 5) {
+      this.player.speed.y = 7;
+    }
+    else if (this.obstaclesSpeed >= 5 && this.obstaclesSpeed < 10) {
+      this.player.speed.y = 10;
+    }
+    else if (this.obstaclesSpeed >= 10 && this.obstaclesSpeed < 15) {
+      this.player.speed.y = 15;
+    }
+    console.log("player speed:", this.player.speed.y)
+  },
+
+  drawScore() {
+    this.ctx.font = '20px serif';
+    this.ctx.fillStyle = '#DE1E2E'
+    this.score += Math.floor(this.obstaclesSpeed * 0.4)
+    this.ctx.fillText(`Score: ${this.score}`, this.canvasSize.width - 120, 30, 90);
+  }
+    
 
   /* TODO:  
-            colisiones que tengan efecto en velocidad
             crear otro tipo de Obstacle (PowerUp)
               - otro tipo de efecto en velocidad
+            showSpeed()
             score() */
 }
