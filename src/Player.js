@@ -4,7 +4,8 @@ class Player {
 
     this.pos = {
       x: posX,
-      y: posY
+      y: posY,
+      radius: width / 2
     }
 
     this.size = {
@@ -40,20 +41,20 @@ class Player {
     draw(){
       this.ctx.fillStyle = "#F48224";
       this.ctx.fillRect(this.pos.x, this.pos.y, this.size.width, this.size.height, this.speed.y)
-      console.log("draw player")
+      //console.log("draw player")
     }
 
     moveUp(){
       if (this.pos.y > this.slope.start.y){
         this.pos.y -= this.speed.y
-        console.log("moving up")
+        // console.log("moving up")
       }
     }
 
     moveDown(){
       if (this.pos.y < this.slope.end.y){
         this.pos.y += this.speed.y
-        console.log("moving down");
+        // console.log("moving down");
       }
     }
       

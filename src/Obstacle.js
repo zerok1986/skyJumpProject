@@ -4,7 +4,8 @@ class Obstacle {
 
     this.pos = {
       x: posX,
-      y: posY
+      y: posY,
+      radius: width / 2
     }
 
     this.size = {

@@ -57,7 +57,7 @@ const game = {
     this.clearScreen();
     this.drawAll()
     this.moveAll()
-    
+    this.isCollision()
    
   }, 1000 / this.FPS)
    
@@ -78,14 +78,14 @@ const game = {
   drawBackground() {
     // this.ctx.fillRect(0, 0, this.canvasSize.width, this.canvasSize.height)
     this.background.draw()
-    console.log("pintando Background")
+    // console.log("pintando Background")
   },
 
   drawSlope(){
     this.ctx.rotate(this.slope.angle * Math.PI / 180);
     this.ctx.fillStyle = '#FFF'
     this.ctx.fillRect(this.slope.start.x, this.slope.start.y, this.slope.end.x, this.slope.end.y);
-    console.log("pintando slope")
+    // console.log("pintando slope")
   },
 
   drawPlayer(){
@@ -104,12 +104,12 @@ const game = {
 
   createBackground() {
     this.background = new Background(this.ctx, 0, 0, this.canvasSize.width, this.canvasSize.height, 5, "bm-view.png")
-    console.log("creando Background")
+    //console.log("creando Background")
   },
 
   createPlayer() {
     this.player = new Player(this.ctx, 100, 100, 20, 20, this.slope, 5)
-    console.log("creando Player")
+    //console.log("creando Player")
   },
   
   getRandomInt(min, max) {
@@ -126,7 +126,7 @@ const game = {
 
   moveBackground() {
     this.background.move()
-    console.log("moviendo Background")
+    //console.log("moviendo Background")
   },
 
   moveObstacle() {
@@ -155,7 +155,25 @@ const game = {
     }
   },
 
-  // TODO: Métodos init(), setContext(), setDimensions(), start(), createAll()
-  // drawAll(), drawScoreBoard(), moveBackground(), setListerners(), clearScreen()
-  // clearObstacles(), isCollision(), gameOver()
+  isCollision() {
+    return this.obstacles.some((obs) => {
+      let dx = (this.player.pos.x + this.player.pos.radius) - (obs.pos.x + obs.pos.radius);
+      let dy = (this.player.pos.y + this.player.pos.radius) - (obs.pos.y + obs.pos.radius);
+      let distance = Math.sqrt(dx * dx + dy * dy);
+
+      if (distance < this.player.pos.radius + obs.pos.radius) {
+          console.log('colision!!!')
+      }
+    })
+  }
+
+
+
 }
+
+  /* TODO:  clearObstacles() 
+            colisiones que tengan efecto en velocidad
+            crear otro tipo de Obstacle (PowerUp)
+              - otro tipo de efecto en velocidad
+            
+  */
