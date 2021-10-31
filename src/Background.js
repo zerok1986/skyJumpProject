@@ -23,7 +23,6 @@ class Background {
   }
 
   init() {
-    
     this.imageInstance = new Image()
     this.imageInstance.src = `../img/${this.imageName}`
     console.log("pillando imagen")

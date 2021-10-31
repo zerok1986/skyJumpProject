@@ -8,12 +8,17 @@ const game = {
   ctx: undefined,
   canvasSize: { width: 500, height: 300 },
   framesCounter: 0,
-  frames: 60,
+  FPS: 60,
   intervalId: undefined,
   background: undefined,
   player: undefined,
   scoreBoard: undefined,
   obstacles: [],
+  slope: {
+    angle: 20,
+    start: {x: 0, y: 20},
+    end: {x:650, y: 180}
+  },
   keys: {
     player: {
       ARROW_UP: "ArrowUp",
@@ -25,6 +30,8 @@ const game = {
     this.setContext()
     this.setDimensions()
     this.createAll()
+    this.setListeners()
+    
     this.start()
   },
 
@@ -34,37 +41,84 @@ const game = {
   },
 
   setDimensions() {
-
     this.canvasDOM.setAttribute("width", this.canvasSize.width)
     this.canvasDOM.setAttribute("height", this.canvasSize.height)
   },
 
   start(){
-    this.drawBackground()
-  },
-
-
-  drawBackground() {
-    console.log("pintando Background")
-    // this.ctx.fillRect(0, 0, this.canvasSize.width, this.canvasSize.height)
-    this.background.draw()
+  window.setInterval(() => {
+    this.clearScreen();
+    this.drawAll()
+    
+   
+  }, 1000 / this.FPS)
+   
   },
   
+  resetContext(){
+    this.ctx.rotate((this.slope.angle * -1 * Math.PI) / 180);
+  },
+
+  drawAll(){
+    this.drawBackground()
+    this.drawSlope()
+    this.drawPlayer()
+    this.resetContext()
+  },
+
+  drawBackground() {
+    // this.ctx.fillRect(0, 0, this.canvasSize.width, this.canvasSize.height)
+    this.background.draw()
+    console.log("pintando Background")
+  },
+
+  drawSlope(){
+    this.ctx.rotate(this.slope.angle * Math.PI / 180);
+    this.ctx.fillStyle = '#FFF'
+    this.ctx.fillRect(this.slope.start.x, this.slope.start.y, this.slope.end.x, this.slope.end.y);
+    console.log("pintando slope")
+  },
+
+  drawPlayer(){
+    this.player.draw()
+    
+  },
+
   createBackground() {
+    this.background = new Background(this.ctx, 0, 0, this.canvasSize.width, this.canvasSize.height, 5, "bm-view.png")
     console.log("creando Background")
-    this.background = new Background(this.ctx, 0, 0, this.canvasSize.width, this.canvasSize.height, 5, "bg.png")
+  },
+
+  createPlayer() {
+    this.player = new Player(this.ctx, 100, 100, 20, 20, 5)
+    console.log("creando Player")
   },
 
   moveBackground() {
-    console.log("moviendo Background")
     this.background.move()
+    console.log("moviendo Background")
   },
 
+  clearScreen() {
+    this.ctx.clearRect(0, 0, this.canvasSize.width, this.canvasSize.height)
+  },
 
   createAll() {
     this.createBackground()
- /*    this.createPlayer()
+    this.createPlayer()
+    /* TODO:
     this.createScoreBoard() */
+  },
+
+  setListeners() {
+    document.onkeydown = (e) => {
+      if (e.key === this.keys.player.ARROW_UP) {
+        this.player.moveUp()
+      }
+      if (e.key === this.keys.player.ARROW_DOWN) {
+        this.player.moveDown()
+      }
+    }
   },
 
   // TODO: Métodos init(), setContext(), setDimensions(), start(), createAll()
