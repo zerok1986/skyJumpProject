@@ -1,5 +1,5 @@
 class Player {
-  constructor(ctx, posX, posY, width, height, slope, speedY) {
+  constructor(ctx, posX, posY, width, height, slope, speedY,imageName) {
     this.ctx = ctx
 
     this.pos = {
@@ -27,21 +27,23 @@ class Player {
     // this.frames = 3
     // this.framesIndex = 0
 
-    // this.imageInstance = undefined
-    // this.imageName = imageName
+    this.imageInstance = undefined
+    this.imageName = imageName
 
     this.init()
   }
 
-    // TODO: Métodos init(), move(), 
     init() {
-      console.log("init player")
+      this.imageInstance = new Image()
+      this.imageInstance.src = `../img/${this.imageName}`
     }
 
     draw(){
-      this.ctx.fillStyle = "#F48224";
-      this.ctx.fillRect(this.pos.x, this.pos.y, this.size.width, this.size.height, this.speed.y)
-      //console.log("draw player")
+      this.ctx.drawImage(this.imageInstance, 0, 3, 50, 48, this.pos.x, this.pos.y, this.size.width, this.size.height)
+      // this.ctx.drawImage(this.imageInstance, 0, 125, 40, 40, this.pos.x, this.pos.y, this.size.width, this.size.height)
+      // this.ctx.fillStyle = "#F48224";
+      // this.ctx.fillRect(this.pos.x, this.pos.y, this.size.width, this.size.height, this.speed.y)
+      // //console.log("draw player")
     }
 
     moveUp(){

@@ -168,10 +168,10 @@ const game = {
 	// player starting y is 33% of canvas y
 	let startingY = this.canvasSize.height * 0.33;
 	// playeer ending x and y is 15% of player starting x and y respectively
-	let width = startingX * 0.15;
-	let height = startingY * 0.15;
+	let width = startingX * 0.25;
+	let height = startingY * 0.25;
 
-    this.player = new Player(this.ctx, startingX, startingY, width, height, this.slope, 5)
+    this.player = new Player(this.ctx, startingX, startingY, width, height, this.slope, 5, 'original-sprite.png')
     //console.log("creando Player")
   },
   
