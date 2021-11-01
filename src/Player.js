@@ -39,7 +39,7 @@ class Player {
     }
 
     draw(){
-      this.ctx.drawImage(this.imageInstance, 0, 3, 50, 48, this.pos.x, this.pos.y, this.size.width, this.size.height)
+      this.ctx.drawImage(this.imageInstance, 0, 0, 60, 50, this.pos.x, this.pos.y, this.size.width, this.size.height)
       // this.ctx.drawImage(this.imageInstance, 0, 125, 40, 40, this.pos.x, this.pos.y, this.size.width, this.size.height)
       // this.ctx.fillStyle = "#F48224";
       // this.ctx.fillRect(this.pos.x, this.pos.y, this.size.width, this.size.height, this.speed.y)

@@ -171,7 +171,7 @@ const game = {
 	let width = startingX * 0.25;
 	let height = startingY * 0.25;
 
-    this.player = new Player(this.ctx, startingX, startingY, width, height, this.slope, 5, 'original-sprite.png')
+    this.player = new Player(this.ctx, startingX, startingY, width, height, this.slope, 5, 'original-cut.png')
     //console.log("creando Player")
   },
   
