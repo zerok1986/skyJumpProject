@@ -39,8 +39,13 @@
 4. Movimiento PowerUps
 5. Scoring, transiciones, etc
 
-## TODO'S PENDIENTES
+## PATH TO SUCCESS
 
-1. Retocar los limites del player para que no rebote y se quede fino
-2. Tocar el n de aparicion de obstaculos con velocidad baja
-3. PowerUp: definir otro tipo de efecto en velocidad
+1. PowerUp: definir otro tipo de efecto en velocidad
+2. Maquetación del Game Board
+3. Pintar Score en el ScoreBoard
+4. Boton de inicio y Restart
+5. Sprite jugador
+6. Sprites obstaculos
+7. Sprites PowerUps
+8. Retocar el asset del Background

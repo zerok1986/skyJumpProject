@@ -57,7 +57,7 @@ const game = {
     if (this.framesCounter > 2000) {
       this.framesCounter = 0
     }
-    if (this.framesCounter % 150 === 0) {
+    if (this.framesCounter % 100 === 0) {
       this.createObstacle()
     }
     if (this.framesCounter % 300 === 0) {
@@ -71,6 +71,7 @@ const game = {
     this.collisionResult(this.isCollision())
     this.updateSpeed()
     console.log("powerup:", this.powerUps)
+    console.log("obstacles: ", this.obstacles)
     console.log('this obstacles speed:' ,this.obstaclesSpeed)
    
   }, 1000 / this.FPS)
@@ -115,6 +116,13 @@ const game = {
 
   drawPowerUps() {
     this.powerUps.forEach(pwu => pwu.draw())
+  },
+
+  drawScore() {
+    this.ctx.font = '20px serif';
+    this.ctx.fillStyle = '#DE1E2E'
+    this.score += Math.floor(this.obstaclesSpeed * 0.4)
+    this.ctx.fillText(`Score: ${this.score}`, this.canvasSize.width - 120, 30, 90);
   },
 
   moveAll(){
@@ -233,7 +241,6 @@ const game = {
     console.log("obstacle speed:", this.obstaclesSpeed)
     if (this.obstaclesSpeed > 0 && this.obstaclesSpeed < 5) {
       if (this.isCollisionDodgedCount > 200){
-        console.log('ha entrado en el primer')
         this.obstaclesSpeed += 1
         this.isCollisionDodgedCount = 0
       }
@@ -253,7 +260,6 @@ const game = {
   },
 
   updateBackgroundSpeed(){
-    console.log("en update background speed")
     if (this.obstaclesSpeed > 0 && this.obstaclesSpeed < 3) {
       this.background.speed.x = 2
     }
@@ -286,16 +292,17 @@ const game = {
     console.log("player speed:", this.player.speed.y)
   },
 
-  drawScore() {
-    this.ctx.font = '20px serif';
-    this.ctx.fillStyle = '#DE1E2E'
-    this.score += Math.floor(this.obstaclesSpeed * 0.4)
-    this.ctx.fillText(`Score: ${this.score}`, this.canvasSize.width - 120, 30, 90);
-  }
+
     
 
-  /* TODO:  retocar los limites del player para que no rebote y se quede fino
-            tocar el n de aparicion de obstaculos con velocidad baja
+  /* TODO:  
             PowerUp: definir otro tipo de efecto en velocidad
+            Maquetación del Game Board
+            Pintar Score en el ScoreBoard
+            Boton de inicio y Restart
+            Sprite jugador
+            Sprites obstaculos
+            Sprites PowerUps
+            Retocar el asset del Background
             */
 }
