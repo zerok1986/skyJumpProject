@@ -30,6 +30,11 @@ class Player {
     this.imageInstance = undefined
     this.imageName = imageName
 
+    this.spriteSource = {
+      source: {x: 0, y:0},
+      size: {width: 60, height:50}
+    }
+
     this.init()
   }
 
@@ -39,7 +44,8 @@ class Player {
     }
 
     draw(){
-      this.ctx.drawImage(this.imageInstance, 0, 0, 60, 50, this.pos.x, this.pos.y, this.size.width, this.size.height)
+      // Referencia dimensiones player: w:60 / h: 50
+      this.ctx.drawImage(this.imageInstance, this.spriteSource.source.x, this.spriteSource.source.y, this.spriteSource.size.width, this.spriteSource.size.height, this.pos.x, this.pos.y, this.size.width, this.size.height)
       // this.ctx.drawImage(this.imageInstance, 0, 125, 40, 40, this.pos.x, this.pos.y, this.size.width, this.size.height)
       // this.ctx.fillStyle = "#F48224";
       // this.ctx.fillRect(this.pos.x, this.pos.y, this.size.width, this.size.height, this.speed.y)
@@ -65,7 +71,7 @@ class Player {
         }
       
         else {
-        this.pos.y = this.slope.end.y + 11
+        this.pos.y = this.slope.end.y
         }
       } 
     }

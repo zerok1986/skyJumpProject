@@ -41,7 +41,9 @@
 
 ## PATH TO SUCCESS
 
-1. Sprite jugador
-2. Sprites obstaculos
-3. Sprites PowerUps
-4. Retocar el asset del Background
+1. Sprite jugador (animarlo estático)
+2. Textura pista (slope)
+3. Sprites obstaculos
+4. Sprites PowerUps (animar a colisión)
+5. Retocar el asset del Background
+6. Background general, pequeños detalles

@@ -125,7 +125,7 @@ const game = {
   },
 
   drawPlayer(){
-    this.player.draw()
+    this.player.draw(0,0,60,50)
     
   },
 
@@ -157,7 +157,7 @@ const game = {
   },
 
   createBackground() {
-    this.background = new Background(this.ctx, 0, 0, this.canvasSize.width, this.canvasSize.height, this.backgroundSpeed, "bm-view.png")
+    this.background = new Background(this.ctx, 0, 0, this.canvasSize.width, this.canvasSize.height, this.backgroundSpeed, "bm-view2.png")
     //console.log("creando Background")
   },
 
@@ -171,7 +171,7 @@ const game = {
 	let width = startingX * 0.25;
 	let height = startingY * 0.25;
 
-    this.player = new Player(this.ctx, startingX, startingY, width, height, this.slope, 5, 'original-cut.png')
+    this.player = new Player(this.ctx, startingX, startingY, width, height, this.slope, 5, 'player-sprite.png')
     //console.log("creando Player")
   },
   
@@ -225,10 +225,25 @@ const game = {
   setListeners() {
     document.onkeydown = (e) => {
       if (e.key === this.keys.player.ARROW_UP) {
+        this.player.spriteSource.source.x = 185
+        this.player.spriteSource.source.y = 0;
         this.player.moveUp()
       }
       if (e.key === this.keys.player.ARROW_DOWN) {
+        this.player.spriteSource.source.x = 120;
+        this.player.spriteSource.source.y = 0;
         this.player.moveDown()
+      }
+    }
+
+    document.onkeyup = (e) => {
+      if (e.key === this.keys.player.ARROW_UP) {
+        this.player.spriteSource.source.x = 0
+        this.player.spriteSource.source.y = 0
+      }
+      if (e.key === this.keys.player.ARROW_DOWN) {
+        this.player.spriteSource.source.x = 0
+        this.player.spriteSource.source.y = 0
       }
     }
   },
@@ -346,13 +361,10 @@ const game = {
     
 
   /* TODO:  
-            PowerUp: definir otro tipo de efecto en velocidad
-            Maquetación del Game Board
-            Pintar Score en el ScoreBoard
-            Boton de inicio y Restart
-            Sprite jugador
+            Sprite jugador (animarlo estático)
+            Textura pista (slope)
             Sprites obstaculos
-            Sprites PowerUps
+            Sprites PowerUps (animar a colisión)
             Retocar el asset del Background
             */
 }
