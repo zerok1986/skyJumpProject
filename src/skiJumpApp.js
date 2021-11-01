@@ -19,7 +19,7 @@ const game = {
   isCollisionCount: 0,
   isCollisionDodgedCount: 0,
   score: 0,
-  lifes: 3,
+  lifes: 15000,
   slope: {
     angle: 20,
     start: {x: 0, y: 42},   ///// x is always 0 y is 7% of canvas height
@@ -67,12 +67,13 @@ const game = {
     this.drawAll()
     this.moveAll()
     this.clearObstacles()
-    this.clearPowerUps()
     this.collisionResult(this.isCollision())
+    this.isCollisionPowerUp()
+    this.clearPowerUps()
     this.updateSpeed()
-    console.log("powerup:", this.powerUps)
-    console.log("obstacles: ", this.obstacles)
-    console.log('this obstacles speed:' ,this.obstaclesSpeed)
+    console.log(this.isCollisionPowerUp())
+ /*    console.log("obstacles: ", this.obstacles)
+    console.log('this obstacles speed:' ,this.obstaclesSpeed) */
    
   }, 1000 / this.FPS)
    
@@ -261,6 +262,19 @@ const game = {
     })
   },
 
+  isCollisionPowerUp() {
+      return this.powerUps.some((pws) => {
+      let dx = (this.player.pos.x + this.player.pos.radius) - (pws.pos.x + pws.pos.radius);
+      let dy = (this.player.pos.y + this.player.pos.radius) - (pws.pos.y + pws.pos.radius);
+      let distance = Math.sqrt(dx * dx + dy * dy);
+
+      if (distance < this.player.pos.radius + pws.pos.radius) {
+          this.lifes+= 5;
+          console.log("Collision POWER-UP")
+      }
+    })
+  },
+
 
   collisionResult(result) {
     result === true ? this.isCollisionCount++ : this.isCollisionDodgedCount++
@@ -273,8 +287,8 @@ const game = {
   },
 
   updateObstacleSpeed() {
-    console.log("en update speed")
-    console.log("obstacle speed:", this.obstaclesSpeed)
+   
+ 
     if (this.obstaclesSpeed > 0 && this.obstaclesSpeed < 5) {
       if (this.isCollisionDodgedCount > 200){
         this.obstaclesSpeed += 1
@@ -309,7 +323,7 @@ const game = {
       this.background.speed.x = 8;
     }
 
-    console.log("background speed:", this.background.speed.x)
+    
   },
 
   updatePlayerSpeed() {
@@ -325,7 +339,7 @@ const game = {
     else if (this.obstaclesSpeed >= 10 && this.obstaclesSpeed < 15) {
       this.player.speed.y = 15;
     }
-    console.log("player speed:", this.player.speed.y)
+   
   }
 
 

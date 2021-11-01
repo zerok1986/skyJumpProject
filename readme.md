@@ -41,10 +41,7 @@
 
 ## PATH TO SUCCESS
 
-1. PowerUp: definir otro tipo de efecto en velocidad
-3. Pintar Score en el ScoreBoard
-4. Boton de inicio y Restart
-5. Sprite jugador
-6. Sprites obstaculos
-7. Sprites PowerUps
-8. Retocar el asset del Background
+1. Sprite jugador
+2. Sprites obstaculos
+3. Sprites PowerUps
+4. Retocar el asset del Background
