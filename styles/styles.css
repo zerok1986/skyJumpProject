@@ -1,5 +1,23 @@
 body {
-    margin: 0;
-    padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.panel {
+  font-size: 24px;
+  width: 1000px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border: 2px solid grey;
+}

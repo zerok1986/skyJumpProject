@@ -13,13 +13,13 @@ const game = {
   background: undefined,
   backgroundSpeed: 1,
   player: undefined,
-  scoreBoard: undefined,
   obstacles: [],
   obstaclesSpeed: 1,
   powerUps: [],
   isCollisionCount: 0,
   isCollisionDodgedCount: 0,
   score: 0,
+  lifes: 3,
   slope: {
     angle: 20,
     start: {x: 0, y: 42},   ///// x is always 0 y is 7% of canvas height
@@ -77,6 +77,23 @@ const game = {
   }, 1000 / this.FPS)
    
   },
+
+  reset() {
+    this.clearScreen()
+    this.framesCounter = 0
+    this.ctx = undefined
+    this.canvasDOM = undefined
+    this.intervalId = undefined
+    this.backgroundSpeed = 1
+    this.obstacles = []
+    this.powerUps = []
+    this.score = 0
+    this.player = undefined
+    this.isCollisionCount = 0
+    this.isCollisionDodgedCount = 0
+    this.obstaclesSpeed = 1
+    this.init()
+  },
   
   resetContext(){
     this.ctx.rotate((this.slope.angle * -1 * Math.PI) / 180);
@@ -84,7 +101,8 @@ const game = {
 
   drawAll(){
     this.drawBackground()
-    this.drawScore()
+    this.updateScore()
+    this.updateLifes()
     this.drawSlope()
     this.drawPlayer()
     this.drawObstacles()
@@ -118,11 +136,17 @@ const game = {
     this.powerUps.forEach(pwu => pwu.draw())
   },
 
-  drawScore() {
-    this.ctx.font = '20px serif';
-    this.ctx.fillStyle = '#DE1E2E'
+  calculateScore() {
     this.score += Math.floor(this.obstaclesSpeed * 0.4)
-    this.ctx.fillText(`Score: ${this.score}`, this.canvasSize.width - 120, 30, 90);
+  },
+
+  updateScore(){
+    this.calculateScore()
+    scoreHTML.innerHTML = `Score: ${this.score}`
+  },
+
+  updateLifes(){
+    lifesHTML.innerHTML = `${this.lifes}`
   },
 
   moveAll(){
@@ -195,8 +219,6 @@ const game = {
   createAll() {
     this.createBackground()
     this.createPlayer()
-    /* TODO:
-    this.createScoreBoard() */
   },
 
   setListeners() {
@@ -234,6 +256,7 @@ const game = {
 
       if (distance < this.player.pos.radius + obs.pos.radius) {
           this.obstaclesSpeed = 1
+          this.lifes--;
       }
     })
   },
@@ -303,7 +326,7 @@ const game = {
       this.player.speed.y = 15;
     }
     console.log("player speed:", this.player.speed.y)
-  },
+  }
 
 
     
