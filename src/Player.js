@@ -50,7 +50,7 @@ class Player {
           this.pos.y -= this.speed.y
         }
         else{
-          this.pos.y = this.slope.start.y + this.size.height / 2
+          this.pos.y = this.slope.start.y
         }
       }
     }
@@ -63,7 +63,7 @@ class Player {
         }
       
         else {
-        this.pos.y = this.slope.end.y - this.size.height / 2
+        this.pos.y = this.slope.end.y
         }
       } 
     }
