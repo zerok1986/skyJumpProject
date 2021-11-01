@@ -6,7 +6,7 @@ const game = {
   desciption: 'Sky jump game with lots of snow',
   canvasDOM: undefined,
   ctx: undefined,
-  canvasSize: { width: 500, height: 300 },
+  canvasSize: { width: 1000, height: 600 },
   framesCounter: 0,
   FPS: 60,
   intervalId: undefined,
@@ -22,8 +22,8 @@ const game = {
   score: 0,
   slope: {
     angle: 20,
-    start: {x: 0, y: 20},
-    end: {x:650, y: 180}
+    start: {x: 0, y: 42},   ///// x is always 0 y is 7% of canvas height
+    end: {x:1300, y: 360}	//// x is 130% of canvas width y is 60% of canvas height
   },
   keys: {
     player: {
@@ -137,7 +137,16 @@ const game = {
   },
 
   createPlayer() {
-    this.player = new Player(this.ctx, 100, 100, 20, 20, this.slope, 5)
+
+	// player starting x is 20% of canvas x
+	let startingX = this.canvasSize.width * 0.20;
+	// player starting y is 33% of canvas y
+	let startingY = this.canvasSize.height * 0.33;
+	// playeer ending x and y is 15% of player starting x and y respectively
+	let width = startingX * 0.15;
+	let height = startingY * 0.15;
+
+    this.player = new Player(this.ctx, startingX, startingY, width, height, this.slope, 5)
     //console.log("creando Player")
   },
   
@@ -150,6 +159,10 @@ const game = {
       this.slope.start.y,
       this.slope.end.y - 20
     );
+ /*    obstacle width is 2.30% of slope x
+	let width = (this.slope.end.x - this.slope.start.x) * 0.023
+    obstacle height is 9.40% of slope y
+	let height = (this.slope.end.y - this.slope.start.y) * 0.094 */
     this.obstacles.push(new Obstacle(this.ctx, this.slope.end.x, randomY, 15, 15, this.slope, this.obstaclesSpeed))
   },
 

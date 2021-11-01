@@ -63,7 +63,7 @@ class Player {
         }
       
         else {
-        this.pos.y = this.slope.end.y
+        this.pos.y = this.slope.end.y + 11
         }
       } 
     }
