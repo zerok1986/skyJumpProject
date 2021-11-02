@@ -41,7 +41,6 @@
 
 ## PATH TO SUCCESS
 
-1. Sprite jugador (animarlo estático)
 2. Textura pista (slope)
 3. Sprites obstaculos
 4. Sprites PowerUps (animar a colisión)

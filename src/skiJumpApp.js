@@ -19,12 +19,13 @@ const game = {
   isCollisionCount: 0,
   isCollisionDodgedCount: 0,
   score: 0,
-  lifes: 15000,
+  lifes: 1000,
   slope: {
     angle: 20,
     start: {x: 0, y: 42},   ///// x is always 0 y is 7% of canvas height
     end: {x:1300, y: 360}	//// x is 130% of canvas width y is 60% of canvas height
   },
+  moving: 0,
   keys: {
     player: {
       ARROW_UP: "ArrowUp",
@@ -225,11 +226,13 @@ const game = {
   setListeners() {
     document.onkeydown = (e) => {
       if (e.key === this.keys.player.ARROW_UP) {
+		this.moving = 1;
         this.player.spriteSource.source.x = 185
         this.player.spriteSource.source.y = 0;
         this.player.moveUp()
       }
       if (e.key === this.keys.player.ARROW_DOWN) {
+		this.moving = 1;
         this.player.spriteSource.source.x = 120;
         this.player.spriteSource.source.y = 0;
         this.player.moveDown()
@@ -238,10 +241,12 @@ const game = {
 
     document.onkeyup = (e) => {
       if (e.key === this.keys.player.ARROW_UP) {
+		this.moving = 0;
         this.player.spriteSource.source.x = 0
         this.player.spriteSource.source.y = 0
       }
       if (e.key === this.keys.player.ARROW_DOWN) {
+		this.moving = 0;
         this.player.spriteSource.source.x = 0
         this.player.spriteSource.source.y = 0
       }
@@ -272,7 +277,7 @@ const game = {
 
       if (distance < this.player.pos.radius + obs.pos.radius) {
           this.obstaclesSpeed = 1
-          this.lifes--;
+          this.lifes -= 10;
       }
     })
   },
@@ -361,7 +366,7 @@ const game = {
     
 
   /* TODO:  
-            Sprite jugador (animarlo estático)
+            
             Textura pista (slope)
             Sprites obstaculos
             Sprites PowerUps (animar a colisión)

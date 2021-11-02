@@ -25,7 +25,7 @@ class Player {
 
     //// TODO:
     // this.frames = 3
-    // this.framesIndex = 0
+    this.framesIndex = 0
 
     this.imageInstance = undefined
     this.imageName = imageName
@@ -45,12 +45,26 @@ class Player {
 
     draw(){
       // Referencia dimensiones player: w:60 / h: 50
-      this.ctx.drawImage(this.imageInstance, this.spriteSource.source.x, this.spriteSource.source.y, this.spriteSource.size.width, this.spriteSource.size.height, this.pos.x, this.pos.y, this.size.width, this.size.height)
-      // this.ctx.drawImage(this.imageInstance, 0, 125, 40, 40, this.pos.x, this.pos.y, this.size.width, this.size.height)
-      // this.ctx.fillStyle = "#F48224";
-      // this.ctx.fillRect(this.pos.x, this.pos.y, this.size.width, this.size.height, this.speed.y)
-      // //console.log("draw player")
+	  if (game.moving != 1){
+		  this.ctx.drawImage(this.imageInstance, this.spriteSource.source.x + (this.spriteSource.size.width * this.framesIndex),
+			  this.spriteSource.source.y, this.spriteSource.size.width, this.spriteSource.size.height, this.pos.x, this.pos.y, this.size.width, this.size.height)
+		  if (game.framesCounter % 50 === 0) {
+			  this.animate()
+		  }
+	  }
+	  else{
+		  this.ctx.drawImage(this.imageInstance, this.spriteSource.source.x, this.spriteSource.source.y, this.spriteSource.size.width, this.spriteSource.size.height, this.pos.x, this.pos.y, this.size.width, this.size.height)
+	  }
+    
     }
+
+	animate(){
+		if (this.framesIndex === 1) {
+			this.framesIndex = 0
+			return
+		}
+		this.framesIndex++
+	}
 
     moveUp(){
       if (this.pos.y > this.slope.start.y){
