@@ -41,8 +41,7 @@
 
 ## PATH TO SUCCESS
 
-2. Textura pista (slope)
-3. Sprites obstaculos
-4. Sprites PowerUps (animar a colisión)
-5. Retocar el asset del Background
-6. Background general, pequeños detalles
+1. Sprites obstaculos
+2. Sprites PowerUps (animar a colisión)
+3. Retocar el asset del Background
+4. Background general, pequeños detalles

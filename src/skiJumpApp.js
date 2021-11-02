@@ -20,6 +20,7 @@ const game = {
   isCollisionDodgedCount: 0,
   score: 0,
   lifes: 1000,
+  slopeInstance: undefined,
   slope: {
     angle: 20,
     start: {x: 0, y: 42},   ///// x is always 0 y is 7% of canvas height
@@ -120,8 +121,7 @@ const game = {
 
   drawSlope(){
     this.ctx.rotate(this.slope.angle * Math.PI / 180);
-    this.ctx.fillStyle = '#FFF'
-    this.ctx.fillRect(this.slope.start.x, this.slope.start.y, this.slope.end.x, this.slope.end.y);
+    this.slopeInstance.draw()
     // console.log("pintando slope")
   },
 
@@ -153,6 +153,7 @@ const game = {
 
   moveAll(){
     this.moveBackground()
+    this.moveSlope()
     this.moveObstacle()
     this.movePowerUps()
   },
@@ -160,6 +161,18 @@ const game = {
   createBackground() {
     this.background = new Background(this.ctx, 0, 0, this.canvasSize.width, this.canvasSize.height, this.backgroundSpeed, "bm-view2.png")
     //console.log("creando Background")
+  },
+
+  createSlope(){
+    this.slopeInstance = new Slope(
+      this.ctx,
+      this.slope.start.x,
+      this.slope.start.y,
+      this.slope.end.x,
+      this.slope.end.y,
+      this.backgroundSpeed,
+      "big-slope-red.png"
+    );
   },
 
   createPlayer() {
@@ -205,6 +218,10 @@ const game = {
     //console.log("moviendo Background")
   },
 
+  moveSlope(){
+    this.slopeInstance.move()
+  },
+
   moveObstacle() {
     this.obstacles.forEach(obs => obs.move())
   },
@@ -220,6 +237,7 @@ const game = {
 
   createAll() {
     this.createBackground()
+    this.createSlope()
     this.createPlayer()
   },
 
@@ -307,7 +325,6 @@ const game = {
   },
 
   updateObstacleSpeed() {
-   
  
     if (this.obstaclesSpeed > 0 && this.obstaclesSpeed < 5) {
       if (this.isCollisionDodgedCount > 200){
@@ -332,17 +349,20 @@ const game = {
   updateBackgroundSpeed(){
     if (this.obstaclesSpeed > 0 && this.obstaclesSpeed < 3) {
       this.background.speed.x = 2
+      this.slopeInstance.speed.x = 2
     }
     else if (this.obstaclesSpeed >= 3 && this.obstaclesSpeed < 5) {
       this.background.speed.x = 4;
+      this.slopeInstance.speed.x = 4;
     }
     else if (this.obstaclesSpeed >= 5 && this.obstaclesSpeed < 10) {
       this.background.speed.x = 6;
+      this.slopeInstance.speed.x = 6
     }
     else if (this.obstaclesSpeed >= 10 && this.obstaclesSpeed < 15) {
       this.background.speed.x = 8;
+      this.slopeInstance.speed.x = 8
     }
-
     
   },
 
@@ -366,8 +386,6 @@ const game = {
     
 
   /* TODO:  
-            
-            Textura pista (slope)
             Sprites obstaculos
             Sprites PowerUps (animar a colisión)
             Retocar el asset del Background
