@@ -38,7 +38,7 @@ class PowerUp {
     this.frameIndex = 0;
 
     this.spriteSource = {
-      source: { x: 0, y: 0 },
+      source: { x: 0, y: 1330 },
       size: { width: 190, height: 190 },
     };
 

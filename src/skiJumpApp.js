@@ -121,6 +121,7 @@ const game = {
   drawBackground() {
     // this.ctx.fillRect(0, 0, this.canvasSize.width, this.canvasSize.height)
     this.background.draw();
+    // this.background.drawCorner();
     // console.log("pintando Background")
   },
 
@@ -175,7 +176,8 @@ const game = {
       this.canvasSize.width,
       this.canvasSize.height,
       this.backgroundSpeed,
-      "bm-view2.png"
+      "bg-double-3.png",
+      "bg-corner.png"
     );
     //console.log("creando Background")
   },
@@ -427,13 +429,4 @@ const game = {
       this.player.speed.y = 15;
     }
   },
-
-  /* TODO:  
-            Afinar asset del Slope
-            Retocar el asset del Background
-            Retocar la imagen de background HTML
-            Retocar HTML + CSS
-            Retocar estilos botones
-            Afinar generación de obstáculos
-            */
 };

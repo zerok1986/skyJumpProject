@@ -42,8 +42,9 @@
 ## PATH TO SUCCESS
 
 1. Afinar asset del Slope
-2. Retocar el asset del Background
-3. Retocar la imagen de background HTML
-4. Retocar HTML + CSS
-5. Retocar estilos botones
-6. Afinar generación de obstáculos
+2. Retocar la imagen de background HTML
+3. Retocar HTML + CSS
+4. Retocar estilos botones
+5. Afinar generación de obstáculos
+6. Limpieza de codigo 
+7. Comentar código
