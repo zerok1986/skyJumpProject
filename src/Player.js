@@ -5,7 +5,7 @@ class Player {
     this.pos = {
       x: posX,
       y: posY,
-      radius: width / 2
+      radius: (width / 2) * 0.80
     }
 
     this.size = {

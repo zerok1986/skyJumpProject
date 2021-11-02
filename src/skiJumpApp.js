@@ -54,31 +54,45 @@ const game = {
   },
 
   start(){
-  this.intervalId = setInterval(() => {
-    this.framesCounter++
-    if (this.framesCounter > 2000) {
-      this.framesCounter = 0
-    }
-    if (this.framesCounter % 100 === 0) {
-      this.createObstacle()
-    }
-    if (this.framesCounter % 300 === 0) {
-      this.createPowerUp()
-    }
-    this.clearScreen();
-    this.drawAll()
-    this.moveAll()
-    this.clearObstacles()
-    this.collisionResult(this.isCollision())
-    this.isCollisionPowerUp()
-    this.clearPowerUps()
-    this.updateSpeed()
-    console.log(this.isCollisionPowerUp())
- /*    console.log("obstacles: ", this.obstacles)
-    console.log('this obstacles speed:' ,this.obstaclesSpeed) */
+    this.intervalId = setInterval(() => {
+      this.framesCounter++
+      if (this.framesCounter > 2000) {
+        this.framesCounter = 0
+      }
+      this.setObstacleFrequency()
+      if (this.framesCounter % 300 === 0) {
+        this.createPowerUp()
+      }
+      this.clearScreen();
+      this.drawAll()
+      this.moveAll()
+      this.clearObstacles()
+      this.collisionResult(this.isCollision())
+      this.isCollisionPowerUp()
+      this.clearPowerUps()
+      this.updateSpeed()
+      console.log(this.isCollisionPowerUp())
+      console.log(this.obstaclesSpeed)
+  /*    console.log("obstacles: ", this.obstacles)
+      console.log('this obstacles speed:' ,this.obstaclesSpeed) */
+    
+    }, 1000 / this.FPS)
    
-  }, 1000 / this.FPS)
-   
+  },
+
+  setObstacleFrequency(){
+    if (this.obstaclesSpeed > 10){
+          
+      if (this.framesCounter % 50 === 0) {
+            this.createObstacle();
+          }
+    }
+    else{
+          if (this.framesCounter % 100 === 0) {
+            this.createObstacle();
+          }
+    }
+
   },
 
   reset() {
@@ -185,7 +199,7 @@ const game = {
 	let width = startingX * 0.25;
 	let height = startingY * 0.25;
 
-    this.player = new Player(this.ctx, startingX, startingY, width, height, this.slope, 5, 'player-sprite.png')
+    this.player = new Player(this.ctx, startingX, startingY, width, height, this.slope, 7, 'player-sprite.png')
     //console.log("creando Player")
   },
   
@@ -202,7 +216,7 @@ const game = {
 	let width = (this.slope.end.x - this.slope.start.x) * 0.023
     obstacle height is 9.40% of slope y
 	let height = (this.slope.end.y - this.slope.start.y) * 0.094 */
-    this.obstacles.push(new Obstacle(this.ctx, this.slope.end.x, randomY, 15, 15, this.slope, this.obstaclesSpeed))
+    this.obstacles.push(new Obstacle(this.ctx, this.slope.end.x, randomY, 25, 25, this.slope, this.obstaclesSpeed, 'flag-sprite.png'))
   },
 
   createPowerUp() {
@@ -295,7 +309,8 @@ const game = {
 
       if (distance < this.player.pos.radius + obs.pos.radius) {
           this.obstaclesSpeed = 1
-          this.lifes -= 10;
+          this.lifes -= 10
+          obs.spriteSource.source.x = 42
       }
     })
   },
@@ -327,19 +342,19 @@ const game = {
   updateObstacleSpeed() {
  
     if (this.obstaclesSpeed > 0 && this.obstaclesSpeed < 5) {
-      if (this.isCollisionDodgedCount > 200){
+      if (this.isCollisionDodgedCount > 300){
         this.obstaclesSpeed += 1
         this.isCollisionDodgedCount = 0
       }
     } 
     else if (this.obstaclesSpeed >= 5 && this.obstaclesSpeed < 10) {
-      if (this.isCollisionDodgedCount > 100) {
+      if (this.isCollisionDodgedCount > 200) {
           this.obstaclesSpeed += 2
           this.isCollisionDodgedCount = 0
         }
     }
     else if (this.obstaclesSpeed >= 10 && this.obstaclesSpeed < 15) {
-      if (this.isCollisionDodgedCount > 70) {
+      if (this.isCollisionDodgedCount > 100) {
           this.obstaclesSpeed += 3
           this.isCollisionDodgedCount = 0
         }
@@ -367,11 +382,8 @@ const game = {
   },
 
   updatePlayerSpeed() {
-    if (this.obstaclesSpeed > 0 && this.obstaclesSpeed < 3) {
-      this.player.speed.y = 5
-    }
-    else if (this.obstaclesSpeed >= 3 && this.obstaclesSpeed < 5) {
-      this.player.speed.y = 7;
+    if (this.obstaclesSpeed > 0 && this.obstaclesSpeed < 5) {
+      this.player.speed.y = 7
     }
     else if (this.obstaclesSpeed >= 5 && this.obstaclesSpeed < 10) {
       this.player.speed.y = 10;
@@ -386,7 +398,6 @@ const game = {
     
 
   /* TODO:  
-            Sprites obstaculos
             Sprites PowerUps (animar a colisión)
             Retocar el asset del Background
             */
