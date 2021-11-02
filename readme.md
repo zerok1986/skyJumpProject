@@ -41,7 +41,9 @@
 
 ## PATH TO SUCCESS
 
-1. Sprites obstaculos
-2. Sprites PowerUps (animar a colisión)
-3. Retocar el asset del Background
-4. Background general, pequeños detalles
+1. Afinar asset del Slope
+2. Retocar el asset del Background
+3. Retocar la imagen de background HTML
+4. Retocar HTML + CSS
+5. Retocar estilos botones
+6. Afinar generación de obstáculos

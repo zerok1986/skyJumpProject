@@ -429,7 +429,11 @@ const game = {
   },
 
   /* TODO:  
-            Sprites PowerUps (animar a colisión)
+            Afinar asset del Slope
             Retocar el asset del Background
+            Retocar la imagen de background HTML
+            Retocar HTML + CSS
+            Retocar estilos botones
+            Afinar generación de obstáculos
             */
 };
