@@ -71,17 +71,20 @@ const game = {
       this.isCollisionPowerUp();
       this.clearPowerUps();
       this.updateSpeed();
+      console.log("Velocidad obstac: ", this.obstaclesSpeed);
     }, 1000 / this.FPS);
   },
 
   setObstacleFrequency() {
-    if (this.obstaclesSpeed > 10) {
-      if (this.framesCounter % 50 === 0) {
+    if (this.obstaclesSpeed > 7) {
+      if (this.framesCounter % 25 === 0) {
         this.createObstacle();
+        console.log("obstaculo creado");
       }
     } else {
       if (this.framesCounter % 100 === 0) {
         this.createObstacle();
+        console.log("obstaculo creado");
       }
     }
   },
@@ -221,10 +224,7 @@ const game = {
   },
 
   createObstacle() {
-    const randomY = this.getRandomInt(
-      this.slope.start.y,
-      this.slope.end.y - 20
-    );
+    const randomY = this.getRandomInt(this.slope.start.y, this.slope.end.y);
     /*    obstacle width is 2.30% of slope x
 	let width = (this.slope.end.x - this.slope.start.x) * 0.023
     obstacle height is 9.40% of slope y
@@ -245,7 +245,7 @@ const game = {
 
   createPowerUp() {
     const randomY = this.getRandomInt(
-      this.slope.start.y,
+      this.slope.start.y + 20,
       this.slope.end.y - 20
     );
     this.powerUps.push(
@@ -422,11 +422,11 @@ const game = {
 
   updatePlayerSpeed() {
     if (this.obstaclesSpeed > 0 && this.obstaclesSpeed < 5) {
-      this.player.speed.y = 7;
-    } else if (this.obstaclesSpeed >= 5 && this.obstaclesSpeed < 10) {
       this.player.speed.y = 10;
-    } else if (this.obstaclesSpeed >= 10 && this.obstaclesSpeed < 15) {
+    } else if (this.obstaclesSpeed >= 5 && this.obstaclesSpeed < 10) {
       this.player.speed.y = 15;
+    } else if (this.obstaclesSpeed >= 10 && this.obstaclesSpeed < 15) {
+      this.player.speed.y = 17;
     }
   },
 };

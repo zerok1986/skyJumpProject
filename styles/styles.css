@@ -4,6 +4,9 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  background-image: url("../assets/hotBeverage-powerUp-sprite.jpg");
+  background-image: no-repeat;
+  background-position: 50%;
 }
 
 .container {
@@ -14,6 +17,8 @@ body {
 }
 
 .panel {
+  background-color: black;
+  color: white;
   font-size: 24px;
   width: 1000px;
   display: flex;
