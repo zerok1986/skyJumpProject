@@ -64,9 +64,6 @@ class Player {
 
     this.fallImageInstance = new Image();
     this.fallImageInstance.src = `../img/${this.fallImageName}`;
-
-    sounds.ski.preload = "auto";
-    sounds.ski.load();
   }
 
   draw() {
@@ -137,8 +134,8 @@ class Player {
   }
 
   moveUp() {
-    sounds.ski.play();
-    sounds.ski.volume = 0.7;
+    sounds.skiUp.play();
+    sounds.skiUp.volume = 0.1;
     if (this.pos.y > this.slope.start.y) {
       if (this.pos.y - this.speed.y > this.slope.start.y) {
         this.pos.y -= this.speed.y;
@@ -149,6 +146,8 @@ class Player {
   }
 
   moveDown() {
+    sounds.skiDown.play();
+    sounds.skiDown.volume = 0.4;
     if (this.pos.y < this.slope.end.y) {
       if (this.pos.y + this.speed.y < this.slope.end.y) {
         this.pos.y += this.speed.y;

@@ -21,6 +21,7 @@ const game = {
   score: 0,
   lifes: 1000,
   slopeInstance: undefined,
+  wastedPlayer: false,
   slope: {
     angle: 20,
     start: { x: 0, y: 42 }, ///// x is always 0 y is 7% of canvas height
@@ -67,6 +68,10 @@ const game = {
         this.createPowerUp();
       }
       this.clearScreen();
+      if (!this.falling) {
+        sounds.wind.play();
+        sounds.wind.volume = 0.7;
+      }
       this.drawAll();
       this.moveAll();
       this.clearObstacles();
@@ -79,14 +84,23 @@ const game = {
     }, 1000 / this.FPS);
   },
 
-  drawGameOver(){
-	if (this.falling){
-		this.ctx.fillStyle = 'rgba(194, 191, 197, 0.79'
-		this.ctx.fillRect(0, 0, this.canvasSize.width, this.canvasSize.height)
-		this.ctx.fillStyle = '#CC0000'
-		this.ctx.font = '50px Postdam'
-		this.ctx.fillText('WASTED', (this.canvasSize.width / 2) - 100, this.canvasSize.height / 2)
-	}
+  drawGameOver() {
+    if (this.falling) {
+      if (!this.wastedPlayer) {
+        sounds.wasted.play();
+        sounds.wasted.volume = 0.9;
+        this.wastedPlayer = true;
+      }
+      this.ctx.fillStyle = "rgba(194, 191, 197, 0.79";
+      this.ctx.fillRect(0, 0, this.canvasSize.width, this.canvasSize.height);
+      this.ctx.fillStyle = "#CC0000";
+      this.ctx.font = "50px Postdam";
+      this.ctx.fillText(
+        "WASTED",
+        this.canvasSize.width / 2 - 100,
+        this.canvasSize.height / 2
+      );
+    }
   },
 
   setObstacleFrequency() {
@@ -133,7 +147,7 @@ const game = {
     this.drawObstacles();
     this.drawPowerUps();
     this.resetContext();
-	this.drawGameOver();
+    this.drawGameOver();
   },
 
   drawBackground() {
@@ -150,10 +164,10 @@ const game = {
   },
 
   drawPlayer() {
-	if (this.falling){
-		this.player.drawFall()
-		return
-	}
+    if (this.falling) {
+      this.player.drawFall();
+      return;
+    }
     this.player.draw(0, 0, 60, 50);
   },
 
@@ -175,22 +189,20 @@ const game = {
   },
 
   updateScore() {
-	if (this.falling){
-		return
-	}
+    if (this.falling) {
+      return;
+    }
     this.calculateScore();
     scoreHTML.innerHTML = `Score: ${this.score}`;
   },
 
   updateLifes() {
-	if (this.lifes <= 0)
-	{
-		this.lifes = 0;
-	}
-	if (this.lifes === 0)
-	{
-		this.falling = true;
-	}
+    if (this.lifes <= 0) {
+      this.lifes = 0;
+    }
+    if (this.lifes === 0) {
+      this.falling = true;
+    }
     lifesHTML.value = `${this.lifes}`;
   },
 
@@ -246,7 +258,7 @@ const game = {
       this.slope,
       7,
       "player-sprite.png",
-	  "falling2.png"
+      "falling2.png"
     );
     //console.log("creando Player")
   },
@@ -334,18 +346,18 @@ const game = {
     document.onkeydown = (e) => {
       if (e.key === this.keys.player.ARROW_UP) {
         this.moving = 1;
-		if (this.falling){
-			return
-		}
+        if (this.falling) {
+          return;
+        }
         this.keyPressedUp = true;
         this.player.spriteSource.source.x = 185;
         this.player.spriteSource.source.y = 0;
       }
       if (e.key === this.keys.player.ARROW_DOWN) {
         this.moving = 1;
-		if (this.falling) {
-			  return
-		}
+        if (this.falling) {
+          return;
+        }
         this.keyPressedDown = true;
         this.player.spriteSource.source.x = 120;
         this.player.spriteSource.source.y = 0;
@@ -397,11 +409,12 @@ const game = {
       let distance = Math.sqrt(dx * dx + dy * dy);
 
       if (distance < this.player.pos.radius + obs.pos.radius) {
-		this.lifes -= Math.floor(this.calculateDamage());
+        this.lifes -= Math.floor(this.calculateDamage());
 
-		this.obstaclesSpeed = 1;
+        this.obstaclesSpeed = 1;
         obs.spriteSource.source.x = 42;
-
+        sounds.collision.play();
+        sounds.collision.volume = 0.7;
       }
     });
   },
@@ -413,16 +426,15 @@ const game = {
       return 50;
     } else if (this.obstaclesSpeed >= 13 && this.obstaclesSpeed < 14) {
       return 400;
+    } else if (this.obstaclesSpeed > 15) {
+      return 1000;
     }
-	else if (this.obstaclesSpeed > 15) {
-		return 1000;
-	}
   },
 
   isCollisionPowerUp() {
-	if (this.falling){
-		return
-	}
+    if (this.falling) {
+      return;
+    }
     return this.powerUps.some((pws) => {
       let dx =
         this.player.pos.x +
@@ -436,6 +448,8 @@ const game = {
 
       if (distance < this.player.pos.radius + pws.pos.radius) {
         pws.isCollision = 1;
+        sounds.drink.play();
+        sounds.drink.volume = 0.7;
         if (this.lifes < 1000) {
           if (this.lifes + 20 > 1000) {
             this.lifes = 1000;

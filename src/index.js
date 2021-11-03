@@ -11,6 +11,17 @@ resetBtn.onclick = () => {
   game.reset()
 }
 
-// window.onload = () => {
-//   game.init()
-// }
+window.onload = () => {
+  sounds.skiUp.preload = "auto";
+  sounds.skiUp.load();
+  sounds.skiDown.preload = "auto";
+  sounds.skiDown.load();
+  sounds.drink.preload = "auto";
+  sounds.drink.load();
+  sounds.collision.preload = "auto";
+  sounds.collision.load()
+  sounds.wasted.preload = "auto";
+  sounds.wasted.load();
+  sounds.wind.preload = "auto";
+  sounds.wind.load();
+}
