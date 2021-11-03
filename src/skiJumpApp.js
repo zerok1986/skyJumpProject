@@ -193,7 +193,7 @@ const game = {
       this.slope.end.x,
       this.slope.end.y,
       this.backgroundSpeed,
-      "big-slope-red.png"
+      "slope-huge.png"
     );
   },
 
@@ -253,11 +253,11 @@ const game = {
         this.ctx,
         this.slope.end.x,
         randomY,
-        40,
-        40,
+        25,
+        35,
         this.slope,
         7,
-        "powerUp-sprite.png",
+        "jagger-bottle.png",
         "powerUp-explosion.png"
       )
     );
