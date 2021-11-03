@@ -72,6 +72,7 @@ const game = {
       this.clearPowerUps();
       this.updateSpeed();
       console.log("Velocidad obstac: ", this.obstaclesSpeed);
+      console.log("Lifes: ", this.lifes);
     }, 1000 / this.FPS);
   },
 
@@ -161,7 +162,7 @@ const game = {
   },
 
   updateLifes() {
-    lifesHTML.innerHTML = `${this.lifes}`;
+    lifesHTML.value = `${this.lifes}`;
   },
 
   moveAll() {
@@ -350,10 +351,21 @@ const game = {
 
       if (distance < this.player.pos.radius + obs.pos.radius) {
         this.obstaclesSpeed = 1;
-        this.lifes -= 10;
+
+        this.lifes -= this.calculateDamage();
         obs.spriteSource.source.x = 42;
       }
     });
+  },
+
+  calculateDamage() {
+    if (this.obstaclesSpeed > 0 && this.obstaclesSpeed < 5) {
+      return 10;
+    } else if (this.obstaclesSpeed > 5 && this.obstaclesSpeed < 13) {
+      return 20;
+    } else if (this.obstaclesSpeed > 13 && this.obstaclesSpeed < 18) {
+      return 100;
+    }
   },
 
   isCollisionPowerUp() {
@@ -370,7 +382,13 @@ const game = {
 
       if (distance < this.player.pos.radius + pws.pos.radius) {
         pws.isCollision = 1;
-        this.lifes++;
+        if (this.lifes < 1000) {
+          if (this.lifes + 20 > 1000) {
+            this.lifes = 1000;
+          } else {
+            this.lifes += 20;
+          }
+        }
       }
     });
   },

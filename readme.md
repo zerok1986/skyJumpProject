@@ -41,12 +41,9 @@
 
 ## PATH TO SUCCESS
 
-1. Afinar asset del Slope
+1. Afinar el impacto de colisiones y powerUps en Lifes
 2. Función de gameOver()
-3. Retocar la imagen de background HTML
 4. Retocar HTML + CSS
-5. Retocar estilos botones
-6. Afinar generación de obstáculos
 7. Animación Game-Over Player
 8. Limpieza de codigo
 9. Comentar código

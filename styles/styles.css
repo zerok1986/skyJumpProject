@@ -15,7 +15,6 @@ body {
   min-height: 100vh;
   margin: 0;
   padding: 0;
-  
   background-image: url("../img/skiRunMaister2.png");
   background-image: no-repeat;
   background-position: 50%;
@@ -54,6 +53,7 @@ body {
   text-decoration: none;
   text-shadow: 0px 1px 0px #ffffff;
 }
+
 .btn:hover {
   background: linear-gradient(to bottom, #ccc2a6 5%, #eae0c2 100%);
   background-color: #ccc2a6;
