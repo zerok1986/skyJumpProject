@@ -41,9 +41,8 @@
 
 ## PATH TO SUCCESS
 
-1. Afinar el impacto de colisiones y powerUps en Lifes
-2. Función de gameOver()
-4. Retocar HTML + CSS
-7. Animación Game-Over Player
-8. Limpieza de codigo
-9. Comentar código
+1. Función de gameOver()
+2. Animación Game-Over Player
+3. Retocar HTML + CSS
+4. Limpieza de codigo
+5. Comentar código
