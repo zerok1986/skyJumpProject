@@ -1,5 +1,15 @@
 class Player {
-	constructor(ctx, posX, posY, width, height, slope, speedY, imageName, fallImageName) {
+  constructor(
+    ctx,
+    posX,
+    posY,
+    width,
+    height,
+    slope,
+    speedY,
+    imageName,
+    fallImageName
+  ) {
     this.ctx = ctx;
 
     this.pos = {
@@ -27,23 +37,23 @@ class Player {
     // this.frames = 3
     this.framesIndex = 0;
 
-	this.fallFramesIndex = 0;
+    this.fallFramesIndex = 0;
 
     this.imageInstance = undefined;
     this.imageName = imageName;
 
-	this.fallImageInstance = undefined;
-	this.fallImageName = fallImageName;
+    this.fallImageInstance = undefined;
+    this.fallImageName = fallImageName;
 
     this.spriteSource = {
       source: { x: 0, y: 0 },
       size: { width: 60, height: 50 },
     };
 
-	this.fallSpriteSource = {
-		source: { x: 0, y: 0 },
-		size: { width: 62, height: 62 },
-	};
+    this.fallSpriteSource = {
+      source: { x: 0, y: 0 },
+      size: { width: 62, height: 62 },
+    };
 
     this.init();
   }
@@ -52,8 +62,11 @@ class Player {
     this.imageInstance = new Image();
     this.imageInstance.src = `../img/${this.imageName}`;
 
-	this.fallImageInstance = new Image();
-	this.fallImageInstance.src = `../img/${this.fallImageName}`;
+    this.fallImageInstance = new Image();
+    this.fallImageInstance.src = `../img/${this.fallImageName}`;
+
+    sounds.ski.preload = "auto";
+    sounds.ski.load();
   }
 
   draw() {
@@ -89,23 +102,23 @@ class Player {
     }
   }
 
-  drawFall(){
+  drawFall() {
+    this.ctx.drawImage(
+      this.fallImageInstance,
+      this.fallSpriteSource.source.x +
+        this.fallSpriteSource.size.width * this.fallFramesIndex,
+      this.fallSpriteSource.source.y,
+      this.fallSpriteSource.size.width,
+      this.fallSpriteSource.size.height,
+      this.pos.x,
+      this.pos.y,
+      this.size.width,
+      this.size.height
+    );
 
-	  this.ctx.drawImage(
-		  this.fallImageInstance,
-		  this.fallSpriteSource.source.x +
-		  this.fallSpriteSource.size.width * this.fallFramesIndex,
-		  this.fallSpriteSource.source.y,
-		  this.fallSpriteSource.size.width,
-		  this.fallSpriteSource.size.height,
-		  this.pos.x,
-		  this.pos.y,
-		  this.size.width,
-		  this.size.height)
-
-	  if (game.framesCounter % 15 === 0) {
-		  this.animateFall();
-	  }
+    if (game.framesCounter % 15 === 0) {
+      this.animateFall();
+    }
   }
 
   animate() {
@@ -116,14 +129,16 @@ class Player {
     this.framesIndex++;
   }
 
-  animateFall(){
-	  if (this.fallFramesIndex === 6){
-		  return
-	  }
-	  this.fallFramesIndex++;
+  animateFall() {
+    if (this.fallFramesIndex === 6) {
+      return;
+    }
+    this.fallFramesIndex++;
   }
 
   moveUp() {
+    sounds.ski.play();
+    sounds.ski.volume = 0.7;
     if (this.pos.y > this.slope.start.y) {
       if (this.pos.y - this.speed.y > this.slope.start.y) {
         this.pos.y -= this.speed.y;
