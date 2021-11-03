@@ -19,7 +19,7 @@ const game = {
   isCollisionCount: 0,
   isCollisionDodgedCount: 0,
   score: 0,
-  lifes: 0,
+  lifes: 1000,
   slopeInstance: undefined,
   slope: {
     angle: 20,
@@ -232,7 +232,7 @@ const game = {
       this.slope,
       7,
       "player-sprite.png",
-	  "falling-animation.png"
+	  "falling2.png"
     );
     //console.log("creando Player")
   },
