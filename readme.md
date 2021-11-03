@@ -41,9 +41,7 @@
 
 ## PATH TO SUCCESS
 
-1. Función de gameOver()
-2. Animación Game-Over Player
-3. FX sonido impacto + PwUps + gameOver
+1. FX sonido impacto + PwUps + gameOver
 
 4. Retocar HTML + CSS
 5. Limpieza de codigo
