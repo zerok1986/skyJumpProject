@@ -41,8 +41,7 @@
 
 ## PATH TO SUCCESS
 
-1. FX sonido impacto + PwUps + gameOver
-
-4. Retocar HTML + CSS
-5. Limpieza de codigo
-6. Comentar código
+1. Retocar HTML + CSS
+2. Meter panel HTML instrucciones
+3. Limpieza de codigo
+4. Comentar código
