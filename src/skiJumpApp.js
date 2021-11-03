@@ -79,6 +79,16 @@ const game = {
     }, 1000 / this.FPS);
   },
 
+  drawGameOver(){
+	if (this.falling){
+		this.ctx.fillStyle = 'rgba(194, 191, 197, 0.79'
+		this.ctx.fillRect(0, 0, this.canvasSize.width, this.canvasSize.height)
+		this.ctx.fillStyle = '#CC0000'
+		this.ctx.font = '50px Postdam'
+		this.ctx.fillText('WASTED', (this.canvasSize.width / 2) - 100, this.canvasSize.height / 2)
+	}
+  },
+
   setObstacleFrequency() {
     if (this.obstaclesSpeed > 7) {
       if (this.framesCounter % 25 === 0) {
@@ -123,6 +133,7 @@ const game = {
     this.drawObstacles();
     this.drawPowerUps();
     this.resetContext();
+	this.drawGameOver();
   },
 
   drawBackground() {
@@ -164,6 +175,9 @@ const game = {
   },
 
   updateScore() {
+	if (this.falling){
+		return
+	}
     this.calculateScore();
     scoreHTML.innerHTML = `Score: ${this.score}`;
   },
@@ -320,12 +334,18 @@ const game = {
     document.onkeydown = (e) => {
       if (e.key === this.keys.player.ARROW_UP) {
         this.moving = 1;
+		if (this.falling){
+			return
+		}
         this.keyPressedUp = true;
         this.player.spriteSource.source.x = 185;
         this.player.spriteSource.source.y = 0;
       }
       if (e.key === this.keys.player.ARROW_DOWN) {
         this.moving = 1;
+		if (this.falling) {
+			  return
+		}
         this.keyPressedDown = true;
         this.player.spriteSource.source.x = 120;
         this.player.spriteSource.source.y = 0;
@@ -400,6 +420,9 @@ const game = {
   },
 
   isCollisionPowerUp() {
+	if (this.falling){
+		return
+	}
     return this.powerUps.some((pws) => {
       let dx =
         this.player.pos.x +
