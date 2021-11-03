@@ -27,6 +27,7 @@ const game = {
     end: { x: 1300, y: 360 }, //// x is 130% of canvas width y is 60% of canvas height
   },
   moving: 0,
+  keyPressed: false,
   keys: {
     player: {
       ARROW_UP: "ArrowUp",
@@ -281,6 +282,14 @@ const game = {
     this.powerUps.forEach((pwu) => pwu.move());
   },
 
+  movePlayer(direction) {
+    if (direction === "up" && this.keyPressed === true) {
+      this.player.moveUp();
+    } else if (direction === "down" && this.keyPressed === true) {
+      this.player.moveDown();
+    }
+  },
+
   clearScreen() {
     this.ctx.clearRect(0, 0, this.canvasSize.width, this.canvasSize.height);
   },
@@ -295,26 +304,30 @@ const game = {
     document.onkeydown = (e) => {
       if (e.key === this.keys.player.ARROW_UP) {
         this.moving = 1;
+        this.keyPressed = true;
         this.player.spriteSource.source.x = 185;
         this.player.spriteSource.source.y = 0;
-        this.player.moveUp();
+        this.movePlayer("up");
       }
       if (e.key === this.keys.player.ARROW_DOWN) {
         this.moving = 1;
+        this.keyPressed = true;
         this.player.spriteSource.source.x = 120;
         this.player.spriteSource.source.y = 0;
-        this.player.moveDown();
+        this.movePlayer("down");
       }
     };
 
     document.onkeyup = (e) => {
       if (e.key === this.keys.player.ARROW_UP) {
         this.moving = 0;
+        this.keyPressed = false;
         this.player.spriteSource.source.x = 0;
         this.player.spriteSource.source.y = 0;
       }
       if (e.key === this.keys.player.ARROW_DOWN) {
         this.moving = 0;
+        this.keyPressed = false;
         this.player.spriteSource.source.x = 0;
         this.player.spriteSource.source.y = 0;
       }

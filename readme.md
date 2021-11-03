@@ -44,5 +44,6 @@
 1. Función de gameOver()
 2. Animación Game-Over Player
 3. Retocar HTML + CSS
-4. Limpieza de codigo
-5. Comentar código
+4. FX sonido impacto + PwUps + gameOver
+5. Limpieza de codigo
+6. Comentar código
