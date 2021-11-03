@@ -19,7 +19,7 @@ const game = {
   isCollisionCount: 0,
   isCollisionDodgedCount: 0,
   score: 0,
-  lifes: 1000,
+  lifes: 0,
   slopeInstance: undefined,
   slope: {
     angle: 20,

@@ -90,6 +90,9 @@ class Player {
   }
 
   drawFall(){
+	  if (this.fallFramesIndex >= 4){
+		  this.fallSpriteSource.size.width = 70
+	  }
 	  this.ctx.drawImage(
 		  this.fallImageInstance,
 		  this.fallSpriteSource.source.x +
@@ -102,7 +105,7 @@ class Player {
 		  this.size.width,
 		  this.size.height)
 
-	  if (game.framesCounter % 50 === 0) {
+	  if (game.framesCounter % 30 === 0) {
 		  this.animateFall();
 	  }
   }
@@ -116,6 +119,9 @@ class Player {
   }
 
   animateFall(){
+	  if (this.fallFramesIndex === 6){
+		  return
+	  }
 	  this.fallFramesIndex++;
   }
 
