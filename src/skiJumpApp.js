@@ -27,7 +27,8 @@ const game = {
     end: { x: 1300, y: 360 }, //// x is 130% of canvas width y is 60% of canvas height
   },
   moving: 0,
-  keyPressed: false,
+  keyPressedUp: false,
+  keyPressedDown: false,
   keys: {
     player: {
       ARROW_UP: "ArrowUp",
@@ -171,6 +172,7 @@ const game = {
     this.moveSlope();
     this.moveObstacle();
     this.movePowerUps();
+    this.movePlayer();
   },
 
   createBackground() {
@@ -283,9 +285,9 @@ const game = {
   },
 
   movePlayer(direction) {
-    if (direction === "up" && this.keyPressed === true) {
+    if (/* direction === "up" && */ this.keyPressedUp) {
       this.player.moveUp();
-    } else if (direction === "down" && this.keyPressed === true) {
+    } else if (/* direction === "down" &&  */ this.keyPressedDown) {
       this.player.moveDown();
     }
   },
@@ -304,30 +306,30 @@ const game = {
     document.onkeydown = (e) => {
       if (e.key === this.keys.player.ARROW_UP) {
         this.moving = 1;
-        this.keyPressed = true;
+        this.keyPressedUp = true;
         this.player.spriteSource.source.x = 185;
         this.player.spriteSource.source.y = 0;
-        this.movePlayer("up");
+        // this.movePlayer("up");
       }
       if (e.key === this.keys.player.ARROW_DOWN) {
         this.moving = 1;
-        this.keyPressed = true;
+        this.keyPressedDown = true;
         this.player.spriteSource.source.x = 120;
         this.player.spriteSource.source.y = 0;
-        this.movePlayer("down");
+        // this.movePlayer("down");
       }
     };
 
     document.onkeyup = (e) => {
       if (e.key === this.keys.player.ARROW_UP) {
         this.moving = 0;
-        this.keyPressed = false;
+        this.keyPressedUp = false;
         this.player.spriteSource.source.x = 0;
         this.player.spriteSource.source.y = 0;
       }
       if (e.key === this.keys.player.ARROW_DOWN) {
         this.moving = 0;
-        this.keyPressed = false;
+        this.keyPressedDown = false;
         this.player.spriteSource.source.x = 0;
         this.player.spriteSource.source.y = 0;
       }
