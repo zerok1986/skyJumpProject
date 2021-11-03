@@ -27,6 +27,7 @@ const game = {
     end: { x: 1300, y: 360 }, //// x is 130% of canvas width y is 60% of canvas height
   },
   moving: 0,
+  falling: false,
   keyPressedUp: false,
   keyPressedDown: false,
   keys: {
@@ -138,6 +139,10 @@ const game = {
   },
 
   drawPlayer() {
+	if (this.falling){
+		this.player.drawFall()
+		return
+	}
     this.player.draw(0, 0, 60, 50);
   },
 
@@ -164,6 +169,14 @@ const game = {
   },
 
   updateLifes() {
+	if (this.lifes <= 0)
+	{
+		this.lifes = 0;
+	}
+	if (this.lifes === 0)
+	{
+		this.falling = true;
+	}
     lifesHTML.value = `${this.lifes}`;
   },
 
@@ -218,7 +231,8 @@ const game = {
       height,
       this.slope,
       7,
-      "player-sprite.png"
+      "player-sprite.png",
+	  "falling-animation.png"
     );
     //console.log("creando Player")
   },
@@ -284,10 +298,10 @@ const game = {
     this.powerUps.forEach((pwu) => pwu.move());
   },
 
-  movePlayer(direction) {
-    if (/* direction === "up" && */ this.keyPressedUp) {
+  movePlayer() {
+    if (this.keyPressedUp) {
       this.player.moveUp();
-    } else if (/* direction === "down" &&  */ this.keyPressedDown) {
+    } else if (this.keyPressedDown) {
       this.player.moveDown();
     }
   },
@@ -309,14 +323,12 @@ const game = {
         this.keyPressedUp = true;
         this.player.spriteSource.source.x = 185;
         this.player.spriteSource.source.y = 0;
-        // this.movePlayer("up");
       }
       if (e.key === this.keys.player.ARROW_DOWN) {
         this.moving = 1;
         this.keyPressedDown = true;
         this.player.spriteSource.source.x = 120;
         this.player.spriteSource.source.y = 0;
-        // this.movePlayer("down");
       }
     };
 
@@ -365,22 +377,26 @@ const game = {
       let distance = Math.sqrt(dx * dx + dy * dy);
 
       if (distance < this.player.pos.radius + obs.pos.radius) {
-        this.obstaclesSpeed = 1;
+		this.lifes -= Math.floor(this.calculateDamage());
 
-        this.lifes -= this.calculateDamage();
+		this.obstaclesSpeed = 1;
         obs.spriteSource.source.x = 42;
+
       }
     });
   },
 
   calculateDamage() {
-    if (this.obstaclesSpeed > 0 && this.obstaclesSpeed < 5) {
-      return 10;
-    } else if (this.obstaclesSpeed > 5 && this.obstaclesSpeed < 13) {
-      return 20;
-    } else if (this.obstaclesSpeed > 13 && this.obstaclesSpeed < 18) {
-      return 100;
+    if (this.obstaclesSpeed > 0 && this.obstaclesSpeed <= 4) {
+      return 40;
+    } else if (this.obstaclesSpeed >= 5 && this.obstaclesSpeed < 12) {
+      return 50;
+    } else if (this.obstaclesSpeed >= 13 && this.obstaclesSpeed < 14) {
+      return 400;
     }
+	else if (this.obstaclesSpeed > 15) {
+		return 1000;
+	}
   },
 
   isCollisionPowerUp() {
@@ -454,12 +470,10 @@ const game = {
   },
 
   updatePlayerSpeed() {
-    if (this.obstaclesSpeed > 0 && this.obstaclesSpeed < 5) {
-      this.player.speed.y = 10;
-    } else if (this.obstaclesSpeed >= 5 && this.obstaclesSpeed < 10) {
-      this.player.speed.y = 15;
+    if (this.obstaclesSpeed > 0 && this.obstaclesSpeed < 10) {
+      this.player.speed.y = 7;
     } else if (this.obstaclesSpeed >= 10 && this.obstaclesSpeed < 15) {
-      this.player.speed.y = 17;
+      this.player.speed.y = 12;
     }
   },
 };

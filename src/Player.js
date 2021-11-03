@@ -1,5 +1,5 @@
 class Player {
-  constructor(ctx, posX, posY, width, height, slope, speedY, imageName) {
+	constructor(ctx, posX, posY, width, height, slope, speedY, imageName, fallImageName) {
     this.ctx = ctx;
 
     this.pos = {
@@ -27,13 +27,23 @@ class Player {
     // this.frames = 3
     this.framesIndex = 0;
 
+	this.fallFramesIndex = 0;
+
     this.imageInstance = undefined;
     this.imageName = imageName;
+
+	this.fallImageInstance = undefined;
+	this.fallImageName = fallImageName;
 
     this.spriteSource = {
       source: { x: 0, y: 0 },
       size: { width: 60, height: 50 },
     };
+
+	this.fallSpriteSource = {
+		source: { x: 0, y: 0 },
+		size: { width: 66.6, height: 62 },
+	};
 
     this.init();
   }
@@ -41,6 +51,9 @@ class Player {
   init() {
     this.imageInstance = new Image();
     this.imageInstance.src = `../img/${this.imageName}`;
+
+	this.fallImageInstance = new Image();
+	this.fallImageInstance.src = `../img/${this.fallImageName}`;
   }
 
   draw() {
@@ -76,12 +89,34 @@ class Player {
     }
   }
 
+  drawFall(){
+	  this.ctx.drawImage(
+		  this.fallImageInstance,
+		  this.fallSpriteSource.source.x +
+		  this.fallSpriteSource.size.width * this.fallFramesIndex,
+		  this.fallSpriteSource.source.y,
+		  this.fallSpriteSource.size.width,
+		  this.fallSpriteSource.size.height,
+		  this.pos.x,
+		  this.pos.y,
+		  this.size.width,
+		  this.size.height)
+
+	  if (game.framesCounter % 50 === 0) {
+		  this.animateFall();
+	  }
+  }
+
   animate() {
     if (this.framesIndex === 1) {
       this.framesIndex = 0;
       return;
     }
     this.framesIndex++;
+  }
+
+  animateFall(){
+	  this.fallFramesIndex++;
   }
 
   moveUp() {
