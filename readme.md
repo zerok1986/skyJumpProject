@@ -14,17 +14,17 @@ Objetivo: Conseguir la mayor puntuación posible sin chocarse con ningún obstá
 
 Proyecto final del módulo FrontEnd de IronHack
 
-## Deploy 🔧
+## Instalación 🔧
 
 El videojuego está disponible en la siguiente web: https://zerok1986.github.io/skyJumpProject/
 
-## How to use 📋
+## Cómo se usa 📋
 
 Simplemente accede a la web del juego y pulsa el boton de START. Si necesitas ver una leyenda de las instrucciones, pulsa el boton HOW TO PLAY.
 
 Para reiniciar la partida pulsa F5.
 
-# Construido con 🛠️
+## Construido con 🛠️
 
 - Vanilla JavaScript
 - HTML5
