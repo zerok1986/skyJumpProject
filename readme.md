@@ -4,7 +4,6 @@ Videojuego de scroll vertical en Canvas que representa un descenso por una pista
 
 Objetivo: Conseguir la mayor puntuación posible sin chocarse con ningún obstáculo.
 
-
 ## Descripción 🚀
 
 - Jugabilidad: Tecla ARROW UP para mover al jugador hacia un lado de la pista y ARROW DOWN para moverlo al lado contrario
@@ -15,18 +14,15 @@ Objetivo: Conseguir la mayor puntuación posible sin chocarse con ningún obstá
 
 Proyecto final del módulo FrontEnd de IronHack
 
-
 ## Deploy 🔧
 
-El videojuego está disponible en la siguiente web:
+El videojuego está disponible en la siguiente web: https://zerok1986.github.io/skyJumpProject/
 
+## How to use 📋
 
-## How to use 📋 
-
-Simplemente accede a la web del juego y pulsa el boton de START. Si necesitas ver una leyenda de las instrucciones, pulsa el boton HOW TO PLAY. 
+Simplemente accede a la web del juego y pulsa el boton de START. Si necesitas ver una leyenda de las instrucciones, pulsa el boton HOW TO PLAY.
 
 Para reiniciar la partida pulsa F5.
-
 
 # Construido con 🛠️
 
@@ -34,28 +30,24 @@ Para reiniciar la partida pulsa F5.
 - HTML5
 - CSS3
 
-
 ## Cómo contribuir 🖇️
 
-Para contribuir en este proyecto haz un fork del repo y clónatelo en tu máquina local. Haz las modificaciones que quieras y hazles push. 
+Para contribuir en este proyecto haz un fork del repo y clónatelo en tu máquina local. Haz las modificaciones que quieras y hazles push.
 
 Una vez hecho push, abre una nueva Pull Request que revisaremos y en caso de que encaje con el spirit del videojuego, añadiremos esos cambios al proyecto.
-
 
 ## Licencia 📄
 
 Sin licencia (por el momento)
-
 
 ## Creadores ✒️
 
 - Mauro Monereo
 - Miguel Angel Abad
 
-
 ## Créditos 📢
 
-Con la inestimable ayuda de nuestros TAs y Lead Instructor: 
+Con la inestimable ayuda de nuestros TAs y Lead Instructor:
 
 - Guille Concepción 🤓
 - Sara Mansori 🤓
