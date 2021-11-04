@@ -1,11 +1,11 @@
 /* - - - General Styles - - - */
 
-@font-face {
+/* @font-face {
   font-family: "Postdam";
   src: url("../fonts/Potsdam.ttf");
   font-style: normal;
   font-weight: bold;
-}
+} */
 
 * {
   font-family: "sans-serif";
