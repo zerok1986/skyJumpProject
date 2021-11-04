@@ -1,5 +1,5 @@
 const sounds = {
-  wind: new Audio("../sounds/wind.wav"),
+  wind: new Audio("../sounds/spring-weather.wav"),
   skiUp: new Audio("../sounds/ski1.wav"),
   skiDown: new Audio("../sounds/ski2.wav"),
   collision: new Audio("../sounds/collision.wav"),

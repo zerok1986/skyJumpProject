@@ -135,7 +135,7 @@ class Player {
 
   moveUp() {
     sounds.skiUp.play();
-    sounds.skiUp.volume = 0.1;
+    sounds.skiUp.volume = 0.08;
     if (this.pos.y > this.slope.start.y) {
       if (this.pos.y - this.speed.y > this.slope.start.y) {
         this.pos.y -= this.speed.y;
@@ -147,7 +147,7 @@ class Player {
 
   moveDown() {
     sounds.skiDown.play();
-    sounds.skiDown.volume = 0.4;
+    sounds.skiDown.volume = 0.25;
     if (this.pos.y < this.slope.end.y) {
       if (this.pos.y + this.speed.y < this.slope.end.y) {
         this.pos.y += this.speed.y;
