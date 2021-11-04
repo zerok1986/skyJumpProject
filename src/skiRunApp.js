@@ -96,7 +96,7 @@ const game = {
     let startingX = this.canvasSize.width * 0.2;
     // player starting y is 33% of canvas y
     let startingY = this.canvasSize.height * 0.33;
-    // playeer ending x and y is 15% of player starting x and y respectively
+    // player ending x and y is 15% of player starting x and y respectively
     let width = startingX * 0.25;
     let height = startingY * 0.25;
 
@@ -176,6 +176,7 @@ const game = {
       this.collisionsAndClear();
       this.updateSpeed();
       console.log("Jugando a Ski Run!");
+      console.log("Vel. Obs: ", this.obstaclesSpeed);
     }, 1000 / this.FPS);
   },
 
@@ -462,9 +463,9 @@ const game = {
   calculateDamage() {
     if (this.obstaclesSpeed > 0 && this.obstaclesSpeed <= 4) {
       return 40;
-    } else if (this.obstaclesSpeed >= 5 && this.obstaclesSpeed < 12) {
+    } else if (this.obstaclesSpeed >= 5 && this.obstaclesSpeed <= 12) {
       return 50;
-    } else if (this.obstaclesSpeed >= 13 && this.obstaclesSpeed < 14) {
+    } else if (this.obstaclesSpeed >= 13 && this.obstaclesSpeed <= 14) {
       return 400;
     } else if (this.obstaclesSpeed > 15) {
       return 1000;
