@@ -84,7 +84,7 @@ class PowerUp {
       this.size.width,
       this.size.height
     );
-    console.log(this.spriteSource.size.width * this.frameIndex);
+
     if (game.framesCounter % 2 === 0) {
       this.animate();
     }

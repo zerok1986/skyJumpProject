@@ -39,8 +39,6 @@ class Background {
     this.imageInstance.src = `../img/${this.imageName}`;
     this.cornerImageInstance = new Image();
     this.cornerImageInstance.src = `../img/${this.cornerImageName}`;
-    // console.log("pillando imagen")
-    // console.log(this.imageInstance)
   }
 
   draw() {

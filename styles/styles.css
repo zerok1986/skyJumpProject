@@ -1,3 +1,5 @@
+/* - - - General Styles - - - */
+
 @font-face {
   font-family: "Postdam";
   src: url("../fonts/Potsdam.ttf");
@@ -20,6 +22,8 @@ body {
   background-position: 50%;
 }
 
+/* - - - Game Panel Styles - - - */
+
 .container {
   display: flex;
   flex-direction: column;
@@ -41,6 +45,8 @@ body {
 meter {
   padding-bottom: 5px;
 }
+
+/* - - - Button Styles - - - */
 
 .btn {
   box-shadow: 0px 1px 0px 0px #1c1b18;
@@ -73,6 +79,8 @@ meter {
   min-width: 150px;
   max-width: 150px;
 }
+
+/* - - - How To Play Styles - - - */
 
 .how-to {
   width: 1000px;

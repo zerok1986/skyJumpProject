@@ -1,44 +1,63 @@
-# SKY JUMP PROJECT
+# SKY RUN MAISTER
 
-## Ideas principales:
+Videojuego de scroll vertical en Canvas que representa un descenso por una pista de ski llena de obstáculos (banderas de ski) y PowerUps (botellas de Jägermeister)
 
-- Scroll VERTICAL
-- ArrowUp & ArrowDown key buttons
-- PowerUps => incrementa velocidad
-- Obstaculos => restan velocidad ((colisión))
-- Puntuación final => depende de la velocidad, nos da la SCORE
-- Boton de reinicio rápido (no quieres esperar porque ya sabes que llevas puntuación baja)
+Objetivo: Conseguir la mayor puntuación posible sin chocarse con ningún obstáculo.
 
-### (Ops)
 
-- Niveles => Distintos fondos, distinta pendiente (dificultad de pista)
-- Distintos Obstaculos y PowerUps PROS con influencia en la velocidad (SCORE):
-  - OBSTACULOS tipo OsoPolar / Conejo => te caes - reinicia partida
-  - POWER-UPS tipo estrella Mario o Lata de RedBull => incrementar mucho veloc ó evitar colisiones (haciendote transparente)
+## Descripción 🚀
 
-### Repo con los assets SkiFree: https://github.com/sherzader/ski-free
+- Jugabilidad: Tecla ARROW UP para mover al jugador hacia un lado de la pista y ARROW DOWN para moverlo al lado contrario
 
-### Ejemplos de desplazamiento diagonal de objetos: https://www.sitepoint.com/community/t/canvas-script-animation-object-move-under-diagonally/198908/2
+- Obstáculos: Reducen la velocidad a la inicial con la que comienza el descenso y reducen la barra de vida.
 
-# SKI JUMP GAME STEPS
+- PowerUps: Añaden vida a la barra y puntos al Score.
 
-## PASOS MVP
+Proyecto final del módulo FrontEnd de IronHack
 
-1. Pintar background
-2. Que se mueva en la dirección que queremos
-3. Pintar límites de pista
-4. Rellenar pista
-5. Plantar muñeco en área de juego
-6. Mover muñeco
 
-## PASOS SKY JUMP GAME
+## Deploy 🔧
 
-1. Generar obstaculos en área de juego
-2. Mover obstaculos diagonalmente en dirección al jugador
-3. Detectar colisiones
-4. Movimiento PowerUps
-5. Scoring, transiciones, etc
+El videojuego está disponible en la siguiente web:
 
-## PATH TO SUCCESS
 
-4. Comentar código
+## How to use 📋 
+
+Simplemente accede a la web del juego y pulsa el boton de START. Si necesitas ver una leyenda de las instrucciones, pulsa el boton HOW TO PLAY. 
+
+Para reiniciar la partida pulsa F5.
+
+
+# Construido con 🛠️
+
+- Vanilla JavaScript
+- HTML5
+- CSS3
+
+
+## Cómo contribuir 🖇️
+
+Para contribuir en este proyecto haz un fork del repo y clónatelo en tu máquina local. Haz las modificaciones que quieras y hazles push. 
+
+Una vez hecho push, abre una nueva Pull Request que revisaremos y en caso de que encaje con el spirit del videojuego, añadiremos esos cambios al proyecto.
+
+
+## Licencia 📄
+
+Sin licencia (por el momento)
+
+
+## Creadores ✒️
+
+- Mauro Monereo
+- Miguel Angel Abad
+
+
+## Créditos 📢
+
+Con la inestimable ayuda de nuestros TAs y Lead Instructor: 
+
+- Guille Concepción 🤓
+- Sara Mansori 🤓
+- Laura de Cos 🤓
+- Teo López 🤓

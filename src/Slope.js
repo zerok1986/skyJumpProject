@@ -31,8 +31,6 @@ class Slope {
   init() {
     this.imageInstance = new Image();
     this.imageInstance.src = `../img/${this.imageName}`;
-    // console.log("pillando imagen")
-    // console.log(this.imageInstance)
   }
 
   draw() {
@@ -43,13 +41,13 @@ class Slope {
       this.size.width,
       this.size.height
     )
-	this.ctx.drawImage(
-    this.imageInstance,
-    this.pos.x + this.size.width,
-    this.pos.y,
-    this.size.width,
-    this.size.height
-  );
+    this.ctx.drawImage(
+      this.imageInstance,
+      this.pos.x + this.size.width,
+      this.pos.y,
+      this.size.width,
+      this.size.height
+    );
   }
 
   move() {

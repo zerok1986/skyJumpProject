@@ -1,9 +1,9 @@
 const game = {
-  title: "Ski Jump App",
+  title: "Ski Run Maister App",
   author: "Mauro Monereo & Miguel Angel Abad",
   license: undefined,
-  version: "0.0.1",
-  desciption: "Sky jump game with lots of snow",
+  version: "1.0.0",
+  desciption: "Sky run game with lots of snow",
   canvasDOM: undefined,
   ctx: undefined,
   canvasSize: { width: 1000, height: 600 },
@@ -38,6 +38,8 @@ const game = {
     },
   },
 
+  /* - - - Init Methods - - - */
+
   init() {
     this.setContext();
     this.setDimensions();
@@ -71,11 +73,11 @@ const game = {
       this.canvasSize.width,
       this.canvasSize.height,
       this.backgroundSpeed,
-      "bg-double-3.png",
-      "bg-corner.png"
+      "bg-double-3.png"
     );
-    //console.log("creando Background")
   },
+
+  /* - - - Create Methods - - - */
 
   createSlope() {
     this.slopeInstance = new Slope(
@@ -109,7 +111,6 @@ const game = {
       "player-sprite.png",
       "falling2.png"
     );
-    
   },
 
   getRandomInt(min, max) {
@@ -118,10 +119,7 @@ const game = {
 
   createObstacle() {
     const randomY = this.getRandomInt(this.slope.start.y, this.slope.end.y);
-    /*    obstacle width is 2.30% of slope x
-          let width = (this.slope.end.x - this.slope.start.x) * 0.023
-          obstacle height is 9.40% of slope y
-          let height = (this.slope.end.y - this.slope.start.y) * 0.094 */
+
     this.obstacles.push(
       new Obstacle(
         this.ctx,
@@ -156,6 +154,8 @@ const game = {
     );
   },
 
+  /* - - - Start & Interval Method - - - */
+
   start() {
     this.intervalId = setInterval(() => {
       this.framesCounter++;
@@ -175,10 +175,11 @@ const game = {
       this.moveAll();
       this.collisionsAndClear();
       this.updateSpeed();
-      console.log("Velocidad obstac: ", this.obstaclesSpeed);
-      console.log("Lifes: ", this.lifes);
+      console.log("Jugando a Ski Run!");
     }, 1000 / this.FPS);
   },
+
+  /* - - - Collisions and Obstacles Set Up - - - */
 
   collisionsAndClear() {
     this.clearObstacles();
@@ -209,6 +210,8 @@ const game = {
     this.ctx.rotate((this.slope.angle * -1 * Math.PI) / 180);
   },
 
+  /* - - - Draw Methods - - - */
+
   drawAll() {
     this.drawBackground();
     this.updateScore();
@@ -228,7 +231,6 @@ const game = {
   drawSlope() {
     this.ctx.rotate((this.slope.angle * Math.PI) / 180);
     this.slopeInstance.draw();
-    // console.log("pintando slope")
   },
 
   drawPlayer() {
@@ -271,6 +273,8 @@ const game = {
     }
   },
 
+  /* - - - Update methods - - - */
+
   calculateScore() {
     this.score += Math.ceil(this.obstaclesSpeed * 0.4);
   },
@@ -280,7 +284,7 @@ const game = {
       return;
     }
     this.calculateScore();
-    scoreHTML.innerHTML = `Score: ${(this.score)}`;
+    scoreHTML.innerHTML = `Score: ${this.score}`;
   },
 
   updateLifes() {
@@ -292,6 +296,57 @@ const game = {
     }
     lifesHTML.value = `${this.lifes}`;
   },
+
+  updateSpeed() {
+    this.updateObstacleSpeed();
+    this.updateBackgroundSpeed();
+    this.updatePlayerSpeed();
+  },
+
+  updateObstacleSpeed() {
+    if (this.obstaclesSpeed > 0 && this.obstaclesSpeed < 5) {
+      if (this.isCollisionDodgedCount > 300) {
+        this.obstaclesSpeed += 1;
+        this.isCollisionDodgedCount = 0;
+      }
+    } else if (this.obstaclesSpeed >= 5 && this.obstaclesSpeed < 10) {
+      if (this.isCollisionDodgedCount > 200) {
+        this.obstaclesSpeed += 2;
+        this.isCollisionDodgedCount = 0;
+      }
+    } else if (this.obstaclesSpeed >= 10 && this.obstaclesSpeed < 15) {
+      if (this.isCollisionDodgedCount > 100) {
+        this.obstaclesSpeed += 3;
+        this.isCollisionDodgedCount = 0;
+      }
+    }
+  },
+
+  updateBackgroundSpeed() {
+    if (this.obstaclesSpeed > 0 && this.obstaclesSpeed < 3) {
+      this.background.speed.x = 2;
+      this.slopeInstance.speed.x = 2;
+    } else if (this.obstaclesSpeed >= 3 && this.obstaclesSpeed < 5) {
+      this.background.speed.x = 4;
+      this.slopeInstance.speed.x = 4;
+    } else if (this.obstaclesSpeed >= 5 && this.obstaclesSpeed < 10) {
+      this.background.speed.x = 6;
+      this.slopeInstance.speed.x = 6;
+    } else if (this.obstaclesSpeed >= 10 && this.obstaclesSpeed < 15) {
+      this.background.speed.x = 8;
+      this.slopeInstance.speed.x = 8;
+    }
+  },
+
+  updatePlayerSpeed() {
+    if (this.obstaclesSpeed > 0 && this.obstaclesSpeed < 10) {
+      this.player.speed.y = 7;
+    } else if (this.obstaclesSpeed >= 10 && this.obstaclesSpeed < 15) {
+      this.player.speed.y = 12;
+    }
+  },
+
+  /* - - - Move Methods - - - */
 
   moveAll() {
     this.moveBackground();
@@ -325,6 +380,8 @@ const game = {
       this.player.moveDown();
     }
   },
+
+  /* - - - setListeners Methods - - - */
 
   setListeners() {
     document.onkeydown = (e) => {
@@ -363,6 +420,8 @@ const game = {
       }
     };
   },
+
+  /* - - - Collisions Methods - - - */
 
   clearObstacles() {
     this.obstacles = this.obstacles.filter((obs) => {
@@ -448,54 +507,5 @@ const game = {
 
   collisionResult(result) {
     result === true ? this.isCollisionCount++ : this.isCollisionDodgedCount++;
-  },
-
-  updateSpeed() {
-    this.updateObstacleSpeed();
-    this.updateBackgroundSpeed();
-    this.updatePlayerSpeed();
-  },
-
-  updateObstacleSpeed() {
-    if (this.obstaclesSpeed > 0 && this.obstaclesSpeed < 5) {
-      if (this.isCollisionDodgedCount > 300) {
-        this.obstaclesSpeed += 1;
-        this.isCollisionDodgedCount = 0;
-      }
-    } else if (this.obstaclesSpeed >= 5 && this.obstaclesSpeed < 10) {
-      if (this.isCollisionDodgedCount > 200) {
-        this.obstaclesSpeed += 2;
-        this.isCollisionDodgedCount = 0;
-      }
-    } else if (this.obstaclesSpeed >= 10 && this.obstaclesSpeed < 15) {
-      if (this.isCollisionDodgedCount > 100) {
-        this.obstaclesSpeed += 3;
-        this.isCollisionDodgedCount = 0;
-      }
-    }
-  },
-
-  updateBackgroundSpeed() {
-    if (this.obstaclesSpeed > 0 && this.obstaclesSpeed < 3) {
-      this.background.speed.x = 2;
-      this.slopeInstance.speed.x = 2;
-    } else if (this.obstaclesSpeed >= 3 && this.obstaclesSpeed < 5) {
-      this.background.speed.x = 4;
-      this.slopeInstance.speed.x = 4;
-    } else if (this.obstaclesSpeed >= 5 && this.obstaclesSpeed < 10) {
-      this.background.speed.x = 6;
-      this.slopeInstance.speed.x = 6;
-    } else if (this.obstaclesSpeed >= 10 && this.obstaclesSpeed < 15) {
-      this.background.speed.x = 8;
-      this.slopeInstance.speed.x = 8;
-    }
-  },
-
-  updatePlayerSpeed() {
-    if (this.obstaclesSpeed > 0 && this.obstaclesSpeed < 10) {
-      this.player.speed.y = 7;
-    } else if (this.obstaclesSpeed >= 10 && this.obstaclesSpeed < 15) {
-      this.player.speed.y = 12;
-    }
   },
 };
