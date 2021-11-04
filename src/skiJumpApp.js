@@ -117,23 +117,6 @@ const game = {
     }
   },
 
-  reset() {
-    this.clearScreen();
-    this.framesCounter = 0;
-    this.ctx = undefined;
-    this.canvasDOM = undefined;
-    this.intervalId = undefined;
-    this.backgroundSpeed = 1;
-    this.obstacles = [];
-    this.powerUps = [];
-    this.score = 0;
-    this.player = undefined;
-    this.isCollisionCount = 0;
-    this.isCollisionDodgedCount = 0;
-    this.obstaclesSpeed = 1;
-    this.init();
-  },
-
   resetContext() {
     this.ctx.rotate((this.slope.angle * -1 * Math.PI) / 180);
   },
@@ -185,7 +168,7 @@ const game = {
   },
 
   calculateScore() {
-    this.score += Math.floor(this.obstaclesSpeed * 0.4);
+    this.score += Math.ceil(this.obstaclesSpeed * 0.4);
   },
 
   updateScore() {
@@ -448,6 +431,7 @@ const game = {
 
       if (distance < this.player.pos.radius + pws.pos.radius) {
         pws.isCollision = 1;
+        this.score += 50;
         sounds.drink.play();
         sounds.drink.volume = 0.7;
         if (this.lifes < 1000) {

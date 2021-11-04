@@ -38,6 +38,10 @@ body {
   border: 2px solid grey;
 }
 
+meter {
+  padding-bottom: 5px;
+}
+
 .btn {
   box-shadow: 0px 1px 0px 0px #1c1b18;
   background: linear-gradient(to bottom, #eae0c2 5%, #ccc2a6 100%);
@@ -61,4 +65,29 @@ body {
 .btn:active {
   position: relative;
   top: 1px;
+}
+
+.score {
+  padding: 0 5px;
+}
+
+.how-to {
+  width: 1000px;
+  background-color: #eae0c2;
+  border: 2px solid grey;
+}
+
+ul {
+  display: flex;
+  justify-content: space-around;
+  list-style: none;
+}
+
+li img {
+  width: 40px;
+  height: 40px;
+}
+
+.hidden {
+  display: none;
 }
