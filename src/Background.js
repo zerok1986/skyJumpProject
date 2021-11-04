@@ -37,8 +37,6 @@ class Background {
   init() {
     this.imageInstance = new Image();
     this.imageInstance.src = `../img/${this.imageName}`;
-    this.cornerImageInstance = new Image();
-    this.cornerImageInstance.src = `../img/${this.cornerImageName}`;
   }
 
   draw() {
