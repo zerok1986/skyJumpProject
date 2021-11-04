@@ -1,14 +1,14 @@
 /* - - - General Styles - - - */
 
 @font-face {
+  src: url("../fonts/Potsdam.ttf");
   font-family: "Postdam";
-  src: url("fonts/Potsdam.ttf");
   font-style: normal;
   font-weight: bold;
 }
 
 * {
-  font-family: "Postdam", "sans-serif";
+  font-family: "Postdam", sans-serif;
   box-sizing: border-box;
 }
 

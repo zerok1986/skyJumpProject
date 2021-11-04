@@ -192,12 +192,10 @@ const game = {
     if (this.obstaclesSpeed > 7) {
       if (this.framesCounter % 25 === 0) {
         this.createObstacle();
-        console.log("obstaculo creado");
       }
     } else {
       if (this.framesCounter % 100 === 0) {
         this.createObstacle();
-        console.log("obstaculo creado");
       }
     }
   },
