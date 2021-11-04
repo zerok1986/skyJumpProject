@@ -356,7 +356,6 @@ const game = {
 
   moveBackground() {
     this.background.move();
-    //console.log("moviendo Background")
   },
 
   moveSlope() {

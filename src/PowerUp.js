@@ -53,10 +53,10 @@ class PowerUp {
 
   init() {
     this.imageInstance = new Image();
-    this.imageInstance.src = `../img/${this.imageName}`;
+    this.imageInstance.src = `img/${this.imageName}`;
 
     this.collisionImageInstance = new Image();
-    this.collisionImageInstance.src = `../img/${this.collisionImageName}`;
+    this.collisionImageInstance.src = `img/${this.collisionImageName}`;
   }
 
   draw() {

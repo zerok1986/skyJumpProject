@@ -58,10 +58,10 @@ class Player {
 
   init() {
     this.imageInstance = new Image();
-    this.imageInstance.src = `../img/${this.imageName}`;
+    this.imageInstance.src = `img/${this.imageName}`;
 
     this.fallImageInstance = new Image();
-    this.fallImageInstance.src = `../img/${this.fallImageName}`;
+    this.fallImageInstance.src = `img/${this.fallImageName}`;
   }
 
   draw() {
