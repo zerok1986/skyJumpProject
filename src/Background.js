@@ -1,14 +1,5 @@
 class Background {
-  constructor(
-    ctx,
-    posX,
-    posY,
-    width,
-    height,
-    speedX,
-    imageName,
-    cornerImageName
-  ) {
+  constructor(ctx, posX, posY, width, height, speedX, imageName) {
     this.ctx = ctx;
 
     this.pos = {
@@ -27,9 +18,6 @@ class Background {
 
     this.imageInstance = undefined;
     this.imageName = imageName;
-
-    this.cornerImageInstance = undefined;
-    this.cornerImageName = cornerImageName;
 
     this.init();
   }
@@ -54,10 +42,6 @@ class Background {
       this.size.width,
       this.size.height
     );
-  }
-
-  drawCorner() {
-    this.ctx.drawImage(this.cornerImageInstance, 0, 350, 500, 300);
   }
 
   move() {
