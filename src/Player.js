@@ -33,8 +33,6 @@ class Player {
       end: { x: slope.end.x, y: slope.end.y },
     };
 
-    //// TODO:
-    // this.frames = 3
     this.framesIndex = 0;
 
     this.fallFramesIndex = 0;

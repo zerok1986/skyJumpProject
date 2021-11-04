@@ -57,144 +57,10 @@ const game = {
     this.canvasDOM.setAttribute("height", this.canvasSize.height);
   },
 
-  start() {
-    this.intervalId = setInterval(() => {
-      this.framesCounter++;
-      if (this.framesCounter > 2000) {
-        this.framesCounter = 0;
-      }
-      this.setObstacleFrequency();
-      if (this.framesCounter % 300 === 0) {
-        this.createPowerUp();
-      }
-      this.clearScreen();
-      if (!this.falling) {
-        sounds.wind.play();
-        sounds.wind.volume = 0.7;
-      }
-      this.drawAll();
-      this.moveAll();
-      this.clearObstacles();
-      this.collisionResult(this.isCollision());
-      this.isCollisionPowerUp();
-      this.clearPowerUps();
-      this.updateSpeed();
-      console.log("Velocidad obstac: ", this.obstaclesSpeed);
-      console.log("Lifes: ", this.lifes);
-    }, 1000 / this.FPS);
-  },
-
-  drawGameOver() {
-    if (this.falling) {
-      if (!this.wastedPlayer) {
-        sounds.wasted.play();
-        sounds.wasted.volume = 0.9;
-        this.wastedPlayer = true;
-      }
-      this.ctx.fillStyle = "rgba(194, 191, 197, 0.79";
-      this.ctx.fillRect(0, 0, this.canvasSize.width, this.canvasSize.height);
-      this.ctx.fillStyle = "#CC0000";
-      this.ctx.font = "50px Postdam";
-      this.ctx.fillText(
-        "WASTED",
-        this.canvasSize.width / 2 - 100,
-        this.canvasSize.height / 2
-      );
-    }
-  },
-
-  setObstacleFrequency() {
-    if (this.obstaclesSpeed > 7) {
-      if (this.framesCounter % 25 === 0) {
-        this.createObstacle();
-        console.log("obstaculo creado");
-      }
-    } else {
-      if (this.framesCounter % 100 === 0) {
-        this.createObstacle();
-        console.log("obstaculo creado");
-      }
-    }
-  },
-
-  resetContext() {
-    this.ctx.rotate((this.slope.angle * -1 * Math.PI) / 180);
-  },
-
-  drawAll() {
-    this.drawBackground();
-    this.updateScore();
-    this.updateLifes();
-    this.drawSlope();
-    this.drawPlayer();
-    this.drawObstacles();
-    this.drawPowerUps();
-    this.resetContext();
-    this.drawGameOver();
-  },
-
-  drawBackground() {
-    // this.ctx.fillRect(0, 0, this.canvasSize.width, this.canvasSize.height)
-    this.background.draw();
-    // this.background.drawCorner();
-    // console.log("pintando Background")
-  },
-
-  drawSlope() {
-    this.ctx.rotate((this.slope.angle * Math.PI) / 180);
-    this.slopeInstance.draw();
-    // console.log("pintando slope")
-  },
-
-  drawPlayer() {
-    if (this.falling) {
-      this.player.drawFall();
-      return;
-    }
-    this.player.draw(0, 0, 60, 50);
-  },
-
-  drawObstacles() {
-    this.obstacles.forEach((obs) => obs.draw());
-  },
-
-  drawPowerUps() {
-    this.powerUps.forEach((pwu) => {
-      if (pwu.isCollision === 1) {
-        pwu.drawCollision();
-      }
-      pwu.draw();
-    });
-  },
-
-  calculateScore() {
-    this.score += Math.ceil(this.obstaclesSpeed * 0.4);
-  },
-
-  updateScore() {
-    if (this.falling) {
-      return;
-    }
-    this.calculateScore();
-    scoreHTML.innerHTML = `Score: ${this.score}`;
-  },
-
-  updateLifes() {
-    if (this.lifes <= 0) {
-      this.lifes = 0;
-    }
-    if (this.lifes === 0) {
-      this.falling = true;
-    }
-    lifesHTML.value = `${this.lifes}`;
-  },
-
-  moveAll() {
-    this.moveBackground();
-    this.moveSlope();
-    this.moveObstacle();
-    this.movePowerUps();
-    this.movePlayer();
+  createAll() {
+    this.createBackground();
+    this.createSlope();
+    this.createPlayer();
   },
 
   createBackground() {
@@ -243,7 +109,7 @@ const game = {
       "player-sprite.png",
       "falling2.png"
     );
-    //console.log("creando Player")
+    
   },
 
   getRandomInt(min, max) {
@@ -253,9 +119,9 @@ const game = {
   createObstacle() {
     const randomY = this.getRandomInt(this.slope.start.y, this.slope.end.y);
     /*    obstacle width is 2.30% of slope x
-	let width = (this.slope.end.x - this.slope.start.x) * 0.023
-    obstacle height is 9.40% of slope y
-	let height = (this.slope.end.y - this.slope.start.y) * 0.094 */
+          let width = (this.slope.end.x - this.slope.start.x) * 0.023
+          obstacle height is 9.40% of slope y
+          let height = (this.slope.end.y - this.slope.start.y) * 0.094 */
     this.obstacles.push(
       new Obstacle(
         this.ctx,
@@ -290,6 +156,151 @@ const game = {
     );
   },
 
+  start() {
+    this.intervalId = setInterval(() => {
+      this.framesCounter++;
+      if (this.framesCounter > 2000) {
+        this.framesCounter = 0;
+      }
+      this.setObstacleFrequency();
+      if (this.framesCounter % 300 === 0) {
+        this.createPowerUp();
+      }
+      this.clearScreen();
+      if (!this.falling) {
+        sounds.wind.play();
+        sounds.wind.volume = 0.7;
+      }
+      this.drawAll();
+      this.moveAll();
+      this.collisionsAndClear();
+      this.updateSpeed();
+      console.log("Velocidad obstac: ", this.obstaclesSpeed);
+      console.log("Lifes: ", this.lifes);
+    }, 1000 / this.FPS);
+  },
+
+  collisionsAndClear() {
+    this.clearObstacles();
+    this.collisionResult(this.isCollision());
+    this.isCollisionPowerUp();
+    this.clearPowerUps();
+  },
+
+  setObstacleFrequency() {
+    if (this.obstaclesSpeed > 7) {
+      if (this.framesCounter % 25 === 0) {
+        this.createObstacle();
+        console.log("obstaculo creado");
+      }
+    } else {
+      if (this.framesCounter % 100 === 0) {
+        this.createObstacle();
+        console.log("obstaculo creado");
+      }
+    }
+  },
+
+  clearScreen() {
+    this.ctx.clearRect(0, 0, this.canvasSize.width, this.canvasSize.height);
+  },
+
+  resetContext() {
+    this.ctx.rotate((this.slope.angle * -1 * Math.PI) / 180);
+  },
+
+  drawAll() {
+    this.drawBackground();
+    this.updateScore();
+    this.updateLifes();
+    this.drawSlope();
+    this.drawPlayer();
+    this.drawObstacles();
+    this.drawPowerUps();
+    this.resetContext();
+    this.drawGameOver();
+  },
+
+  drawBackground() {
+    this.background.draw();
+  },
+
+  drawSlope() {
+    this.ctx.rotate((this.slope.angle * Math.PI) / 180);
+    this.slopeInstance.draw();
+    // console.log("pintando slope")
+  },
+
+  drawPlayer() {
+    if (this.falling) {
+      this.player.drawFall();
+      return;
+    }
+    this.player.draw(0, 0, 60, 50);
+  },
+
+  drawObstacles() {
+    this.obstacles.forEach((obs) => obs.draw());
+  },
+
+  drawPowerUps() {
+    this.powerUps.forEach((pwu) => {
+      if (pwu.isCollision === 1) {
+        pwu.drawCollision();
+      }
+      pwu.draw();
+    });
+  },
+
+  drawGameOver() {
+    if (this.falling) {
+      if (!this.wastedPlayer) {
+        sounds.wasted.play();
+        sounds.wasted.volume = 0.9;
+        this.wastedPlayer = true;
+      }
+      this.ctx.fillStyle = "rgba(194, 191, 197, 0.79";
+      this.ctx.fillRect(0, 0, this.canvasSize.width, this.canvasSize.height);
+      this.ctx.fillStyle = "#CC0000";
+      this.ctx.font = "50px Postdam";
+      this.ctx.fillText(
+        "WASTED",
+        this.canvasSize.width / 2 - 100,
+        this.canvasSize.height / 2
+      );
+    }
+  },
+
+  calculateScore() {
+    this.score += Math.ceil(this.obstaclesSpeed * 0.4);
+  },
+
+  updateScore() {
+    if (this.falling) {
+      return;
+    }
+    this.calculateScore();
+    scoreHTML.innerHTML = `Score: ${(this.score)}`;
+  },
+
+  updateLifes() {
+    if (this.lifes <= 0) {
+      this.lifes = 0;
+    }
+    if (this.lifes === 0) {
+      this.falling = true;
+    }
+    lifesHTML.value = `${this.lifes}`;
+  },
+
+  moveAll() {
+    this.moveBackground();
+    this.moveSlope();
+    this.moveObstacle();
+    this.movePowerUps();
+    this.movePlayer();
+  },
+
   moveBackground() {
     this.background.move();
     //console.log("moviendo Background")
@@ -313,16 +324,6 @@ const game = {
     } else if (this.keyPressedDown) {
       this.player.moveDown();
     }
-  },
-
-  clearScreen() {
-    this.ctx.clearRect(0, 0, this.canvasSize.width, this.canvasSize.height);
-  },
-
-  createAll() {
-    this.createBackground();
-    this.createSlope();
-    this.createPlayer();
   },
 
   setListeners() {

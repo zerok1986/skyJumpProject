@@ -41,7 +41,4 @@
 
 ## PATH TO SUCCESS
 
-1. Retocar HTML + CSS
-2. Meter panel HTML instrucciones
-3. Limpieza de codigo
 4. Comentar código

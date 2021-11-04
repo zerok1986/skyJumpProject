@@ -33,7 +33,7 @@ body {
   font-size: 20px;
   width: 1000px;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
   border: 2px solid grey;
 }
@@ -68,7 +68,10 @@ meter {
 }
 
 .score {
-  padding: 0 5px;
+  padding: 0 20px;
+  margin: 0 20px;
+  min-width: 150px;
+  max-width: 150px;
 }
 
 .how-to {
