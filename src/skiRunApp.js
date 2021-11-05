@@ -14,6 +14,8 @@ const game = {
   backgroundSpeed: 1,
   player: undefined,
   obstacles: [],
+  obstaclesRow: [],
+  row: false,
   obstaclesSpeed: 1,
   powerUps: [],
   isCollisionCount: 0,
@@ -118,7 +120,7 @@ const game = {
   },
 
   createObstacle() {
-    const randomY = this.getRandomInt(this.slope.start.y, this.slope.end.y);
+    const randomY = this.getRandomInt(this.slope.start.y, this.slope.end.y - 20);
 
     this.obstacles.push(
       new Obstacle(
@@ -132,6 +134,53 @@ const game = {
         "flag-sprite.png"
       )
     );
+  },
+
+  setObstacleRow(){
+	if (this.obstaclesSpeed >= 17 && !this.row){
+		this.createObstacleRow()
+		this.row = true;
+	}
+	if (this.row){
+		if (this.clearObstacleRow()){
+			this.row = false;
+		}
+	}
+  },
+
+  createObstacleRow(){
+	const totalObstacles = 14;
+	let startY = 42;
+	let spliced = this.getRandomInt(0,totalObstacles -1);
+	for (let i = 0; i < totalObstacles; i++){
+		this.obstaclesRow.push(
+			new Obstacle(
+				this.ctx,
+				this.slope.end.x,
+				startY,
+				25,
+				25,
+				this.slope,
+				this.obstaclesSpeed - 5,
+				"flag-sprite.png"
+			)
+		)
+		startY += 25
+	}
+	if (!this.row){
+		this.obstaclesRow.splice(spliced, 2);
+	}
+  },
+
+  clearObstacleRow(){
+	  this.obstaclesRow = this.obstaclesRow.filter((obs) => {
+		  if (obs.pos.x > 0) {
+			  return true;
+		  }
+	  });
+	  if (!this.obstaclesRow.length){
+		  return true;
+	  }
   },
 
   createPowerUp() {
@@ -162,7 +211,12 @@ const game = {
       if (this.framesCounter > 2000) {
         this.framesCounter = 0;
       }
-      this.setObstacleFrequency();
+      if (this.framesCounter % 1500 === 0){
+		  this.setObstacleRow()
+	  }
+	  if (!this.row){
+		  this.setObstacleFrequency();
+	  }
       if (this.framesCounter % 300 === 0) {
         this.createPowerUp();
       }
@@ -175,8 +229,6 @@ const game = {
       this.moveAll();
       this.collisionsAndClear();
       this.updateSpeed();
-      console.log("Jugando a Ski Run!");
-      console.log("Vel. Obs: ", this.obstaclesSpeed);
     }, 1000 / this.FPS);
   },
 
@@ -187,6 +239,7 @@ const game = {
     this.collisionResult(this.isCollision());
     this.isCollisionPowerUp();
     this.clearPowerUps();
+	this.isCollisionRow();
   },
 
   setObstacleFrequency() {
@@ -218,6 +271,7 @@ const game = {
     this.drawSlope();
     this.drawPlayer();
     this.drawObstacles();
+	this.drawObstaclesRow();
     this.drawPowerUps();
     this.resetContext();
     this.drawGameOver();
@@ -242,6 +296,10 @@ const game = {
 
   drawObstacles() {
     this.obstacles.forEach((obs) => obs.draw());
+  },
+
+  drawObstaclesRow(){
+	  this.obstaclesRow.forEach((obs) => obs.draw());
   },
 
   drawPowerUps() {
@@ -351,6 +409,7 @@ const game = {
     this.moveBackground();
     this.moveSlope();
     this.moveObstacle();
+	this.moveObstacleRow()
     this.movePowerUps();
     this.movePlayer();
   },
@@ -365,6 +424,10 @@ const game = {
 
   moveObstacle() {
     this.obstacles.forEach((obs) => obs.move());
+  },
+
+  moveObstacleRow(){
+	  this.obstaclesRow.forEach((obs) => obs.move());
   },
 
   movePowerUps() {
@@ -460,8 +523,29 @@ const game = {
     });
   },
 
+	isCollisionRow() {
+		return this.obstaclesRow.some((obs) => {
+			let dx =
+				this.player.pos.x +
+				this.player.pos.radius -
+				(obs.pos.x + obs.pos.radius);
+			let dy =
+				this.player.pos.y +
+				this.player.pos.radius -
+				(obs.pos.y + obs.pos.radius);
+			let distance = Math.sqrt(dx * dx + dy * dy);
+
+			if (distance < this.player.pos.radius + obs.pos.radius) {
+				this.lifes = 0;
+				obs.spriteSource.source.x = 42;
+				sounds.collision.play();
+				sounds.collision.volume = 0.7;
+			}
+		});
+	},
+
   calculateDamage() {
-    if (this.obstaclesSpeed > 0 && this.obstaclesSpeed <= 4) {
+	if (this.obstaclesSpeed > 0 && this.obstaclesSpeed <= 4) {
       return 40;
     } else if (this.obstaclesSpeed >= 5 && this.obstaclesSpeed <= 12) {
       return 50;
